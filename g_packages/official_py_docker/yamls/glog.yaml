@@ -1,0 +1,51 @@
+id: GLogTransformation
+meta:
+  title: GLog transformation
+  subtitle: Generalized Log Transformation based on housekeeping genes and background genes
+  description: >
+    Glog transformation takes the form:
+
+        y = log((x + sqrt(x^2 + c))/2)
+
+    In our implementation, `c` is calculated based on a selected housekeeping gene and a selected background gene. These
+    two genes are selected as the gene whose expression levels have the least standard deviation across all samples,
+    amongst most `n` highly/lowly expressed genes.
+endpoints:
+  backend:
+    cmd: python ./run_glog.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - max: 100
+      min: 0
+      type: number
+      label: The base used for the log function
+      default: 2
+      injectInto: log_base
+    - min: 1
+      type: number
+      label: Number of most highly expressed genes to consider as the candidate for the housekeeping gene
+      default: 50
+      injectInto: n_top
+    - min: 1
+      type: number
+      label: Number of most lowly expressed genes to consider as the candidate for the negative control gene
+      default: 50
+      injectInto: n_bottom
+    - type: select
+      choices:
+        - label: mean
+          value: mean
+        - label: median
+          value: median
+      label: Using which function to select the background level from the negative control gene
+      default: median
+      injectInto: which_mid
+  exports:
+    - kind: assay
+      extractFrom: GLog transformed assay
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay

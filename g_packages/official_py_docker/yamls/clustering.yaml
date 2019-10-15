@@ -1,0 +1,76 @@
+id: Clustering
+meta:
+  title: Clustering
+  subtitle: >-
+    Cluster samples using a common clustering algorithm such as K-means or hierarchical clustering
+  description: >
+    Cluster samples using a common clustering algorithm such as K-means or hierarchical clustering
+endpoints:
+  backend:
+    cmd: python ./clustering.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - injectInto: selectedEmbedding
+      label: Selected embedding
+      type: select
+      default: PCA
+      choices:
+        - value: PCA
+          label: PCA
+        - value: IncrementalPCA
+          label: IncrementalPCA
+        - value: FactorAnalysis
+          label: FactorAnalysis
+        - value: FastICA
+          label: FastICA
+        - value: NMF
+          label: NMF
+        - value: LatentDirichletAllocation
+          label: LatentDirichletAllocation
+        - value: MDS
+          label: MDS
+        - value: autoencoder
+          label: autoencoder
+        - value: None
+          label: None
+    - injectInto: selectedClustering
+      label: Selected clustering
+      type: select
+      default: kmeans
+      choices:
+        - value: kmeans
+          label: kmeans
+        - value: WARD
+          label: WARD
+        - value: DBSCAN
+          label: DBSCAN
+        - value: HDBSCAN
+          label: HDBSCAN
+        - value: Agglomerative_correlation
+          label: Agglomerative_correlation
+        - value: Gaussian_Mixture
+          label: Gaussian_Mixture
+        - value: autoencoder
+          label: autoencoder
+    - injectInto: nComponents
+      label: Number of components for the embedding
+      type: number
+      default: 30
+    - injectInto: nClusters
+      label: Number of clusters
+      type: number
+      default: 2
+    - injectInto: findBestNumberOfCluster
+      label: Find best number of cluster
+      type: checkbox
+      default: false
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay
+  exports:
+    - kind: sampleMeta
+      meta: {}
+      extractFrom: Cluster assignment

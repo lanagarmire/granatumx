@@ -1,0 +1,7 @@
+matplotlib
+colour
+numpy
+scipy
+bokeh
+hdbscan
+scikit-learn>=0.19

@@ -1,0 +1,55 @@
+id: Clustering
+meta:
+  title: Clustering
+  subtitle: >-
+    Cluster samples using a common clustering algorithm such as K-means or hierarchical clustering
+  description: >
+    Cluster samples using a common clustering algorithm such as K-means or hierarchical clustering
+endpoints:
+  backend:
+    cmd: python ./scanpy_clustering.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: select
+      injectInto: selectedEmbedding
+      choices:
+        - label: PCA
+        - label: IncrementalPCA
+          value: IncrementalPCA
+        - label: FactorAnalysis
+          value: FactorAnalysis
+        - label: FastICA
+          value: FastICA
+        - label: NMF
+          value: NMF
+        - label: TSNE
+          value: TSNE
+        - label: MDS
+          value: MDS
+        - label: ISOMAP
+          value: ISOMAP
+    - injectInto: selectedClustering
+    - injectInto: nComponents
+    - injectInto: nClusters
+    - injectInto: findBestNumberOfCluster
+    - type: seed
+      injectInto: random_seed
+      label: Random seed
+      description: >-
+        The Louvain algorithm has a randomly generated inital state which may
+        slightly affect the clustering result. Set this seed to a fixed number
+        ensures reproducibility.
+      default: 13513
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay
+    - kind: sampleCoords
+      label: Cell coordinates for visualization
+      injectInto: sampleCoords
+  exports:
+    - kind: sampleMeta
+      meta: {}
+      extractFrom: Cluster assignment

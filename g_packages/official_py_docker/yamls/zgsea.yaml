@@ -1,0 +1,57 @@
+id: BroadGSEA
+
+meta:
+  title: Broad GSEA
+  subtitle: The canonical Gene Set Enrichment Analysis
+  description: |
+    Gene Set Enrichment Analysis (GSEA) helps identify the biological
+    functions related to a list of genes.
+
+    [http://software.broadinstitute.org/gsea/index.jsp](http://software.broadinstitute.org/gsea/index.jsp)
+
+endpoints:
+  backend:
+    cmd: python ./run_zgsea.py
+    type: docker
+    image: granatum/py
+
+frontend:
+  args:
+    - type: select
+      label: The species
+      choices:
+        - label: Human
+          value: human
+        - label: Mouse
+          description: genes are going to be mapped to their human homologs
+          value: mouse
+      default: human
+      injectInto: species
+    - type: select
+      label: The database for the enrichement analysis
+      choices:
+        - label: Gene Ontology (GO)
+          value: go
+          description: >
+            Gene Ontology (GO) term enrichment is a technique for interpreting
+            sets of genes making use of the Gene Ontology system of
+            classification, in which genes are assigned to a set of predefined
+            bins depending on their functional characteristics. (From wikipedia)
+        - label: Kyoto Encyclopedia of Genes and Genomes (KEGG)
+          value: kegg
+          description: >
+            Kyoto Encyclopedia of Genes and Genomes (KEGG) is a collection of
+            databases dealing with genomes, biological pathways, diseases,
+            drugs, and chemical substances. (From wikipedia)
+      default: kegg
+      injectInto: gset_group_id
+    - type: number
+      label: Number of repeats for calculating p-values
+      min: 0
+      max: 1000000
+      default: 1000
+      injectInto: n_repeats
+  imports:
+    - kind: geneMeta
+      label: A list of genes with their scores
+      injectInto: gene_scores

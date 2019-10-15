@@ -1,0 +1,13 @@
+#!/usr/bin/env python
+
+import json
+from sys import stdin
+from sys import stdout
+from time import sleep
+from random import randint
+
+stdin.read()
+
+sleep(3)
+
+json.dump({'foo': randint(0, 10000)}, stdout)

@@ -1,0 +1,32 @@
+id: "e3a1b92f-c101-4641-be43-2245f85e786b"
+meta:
+  title: "JAMMIT"
+  subtitle: "A pipeline for the JAMMIT analysis with appropriate preprocessing"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState: null
+  -
+    gbox: "GeneFiltering"
+    initialState: null
+  -
+    gbox: "GLogTransformation"
+    initialState: null
+  -
+    gbox: "ScanpyNormalization"
+    initialState: null
+  -
+    gbox: "GeneCentering"
+    initialState: null
+  -
+    gbox: "JammitScan"
+    initialState: null
+  -
+    gbox: "JammitAnalyze"
+    initialState: null
+  -
+    gbox: "FisherGeneSetEnrichment"
+    initialState: null

@@ -1,0 +1,28 @@
+id: DESeq2
+meta:
+  title: DESeq2
+  subtitle: Differential gene expression analysis based on the negative binomial distribution
+  description: |
+    In comparative high-throughput sequencing assays, a fundamental task is the analysis of count data, such as read
+    counts per gene in RNA-seq, for evidence of systematic changes across experimental conditions. Small replicate
+    numbers, discreteness, large dynamic range and the presence of outliers require a suitable statistical approach. We
+    present DESeq2, a method for differential analysis of count data, using shrinkage estimation for dispersions and
+    fold changes to improve stability and interpretability of estimates. This enables a more quantitative analysis
+    focused on the strength rather than the mere presence of differential expression. The DESeq2 package is available at
+    [here](http://www.bioconductor.org/packages/release/bioc/html/DESeq2.html).
+endpoints:
+  backend:
+    cmd: python ./run_DESeq2.py
+    type: docker
+    image: granatum/r
+frontend:
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay
+    - kind: sampleMeta
+      label: Group vector
+      injectInto: groupVec
+      description: >-
+        Group vector (e.g, [1,1,1,2,2,2,...]) indicating the sample groups in
+        the matrix

@@ -1,0 +1,69 @@
+id: FisherGeneSetEnrichment
+
+meta:
+  title: Fisher Gene Set Enrichment
+  subtitle: Find out the over-represented gene sets using Fisher's exact test
+  description: |
+    This is a simple Fisher's exact test that selects gene sets in which the input gene list is over-represented. A
+    threshold is selected so that only genes with greater-than-the-threshold score will be considered.
+
+endpoints:
+  backend:
+    cmd: python ./run_enrichment.py
+    type: docker
+    image: granatum/py
+
+frontend:
+  imports:
+    - kind: geneMeta
+      label: A list of genes with their scores
+      injectInto: gene_scores
+
+  args:
+    - type: select
+      label: The species
+      choices:
+        - label: Human
+          value: human
+        - label: Mouse
+          description: genes are going to be mapped to their human homologs
+          value: mouse
+      default: human
+      injectInto: species
+    - type: select
+      label: The database for the enrichement analysis
+      choices:
+        - label: Gene Ontology (GO)
+          value: go
+          description: >
+            Gene Ontology (GO) term enrichment is a technique for interpreting
+            sets of genes making use of the Gene Ontology system of
+            classification, in which genes are assigned to a set of predefined
+            bins depending on their functional characteristics. (From wikipedia)
+        - label: Kyoto Encyclopedia of Genes and Genomes (KEGG)
+          value: kegg
+          description: >
+            Kyoto Encyclopedia of Genes and Genomes (KEGG) is a collection of
+            databases dealing with genomes, biological pathways, diseases,
+            drugs, and chemical substances. (From wikipedia)
+      default: kegg
+      injectInto: gset_group_id
+    - injectInto: threshold
+      default: 0.001
+      type: number
+      label: Threshold
+    - injectInto: use_abs
+      default: true
+      type: checkbox
+      label: Thresholding on the absolute values of the scores
+    - injectInto: background
+      default: all
+      type: select
+      choices:
+        - value: all
+          label: All genes known to GranatumX
+        - value: from_gene_sets
+          label: All genes appeared in the gene set database
+        - value: from_input
+          label: All genes appeared in the input list including the ones with less-than-threhold scores
+      label: Background genes

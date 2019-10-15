@@ -1,0 +1,40 @@
+id: PPI
+meta:
+  title: Protein-protein interaction network
+  subtitle: Show relationships between top differentially expressed genes
+  # citations:
+  #   - bibtex: |
+  #       @article{chatr2017biogrid,
+  #         title={The BioGRID interaction database: 2017 update},
+  #         author={Chatr-Aryamontri, Andrew and Oughtred, Rose and Boucher, Lorrie and Rust, Jennifer and Chang, Christie and Kolas, Nadine K and O'Donnell, Lara and Oster, Sara and Theesfeld, Chandra and Sellam, Adnane and others},
+  #         journal={Nucleic acids research},
+  #         volume={45},
+  #         number={D1},
+  #         pages={D369--D379},
+  #         year={2017},
+  #         publisher={Oxford University Press}
+  #       }
+  description: |
+    This protein-protein ineteraction (PPI) network module displays connections
+    between top differentially expressed genes, according to publications as
+    compiled by BioGRID.
+endpoints:
+  backend:
+    cmd: python3 ./ppi.py --top_scoring_genes=100 --ppi_table ./ppi_tables/BIOGRID-ALL-3.4.162.tab2.1_8-9_14-17_hs_vs_hs_cat_mm_vs_mm.bz2
+    type: docker
+    image: granatum2_multi-tool_tw
+frontend:
+  args:
+    - type: select
+      label: The species
+      choices:
+        - label: Mouse
+          value: Mm
+        - label: Human
+          value: Hs
+      default: Hs
+      injectInto: species
+  imports:
+    - kind: geneMeta
+      label: A list of genes with their scores
+      injectInto: genesAndScores

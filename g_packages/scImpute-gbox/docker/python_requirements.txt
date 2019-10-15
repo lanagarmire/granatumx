@@ -1,0 +1,5 @@
+rpy2
+numpy
+ipython
+matplotlib
+

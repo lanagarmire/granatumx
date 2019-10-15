@@ -1,0 +1,26 @@
+id: "2e414e02-dbbb-4fd6-99ae-e8f3cd262680"
+meta:
+  title: "Pseudo-time construction"
+  subtitle: "A quick pipeline that helps you recover the differentiation or development trajectory of your cells"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState: null
+  -
+    gbox: "ScanpyDownsampling"
+    initialState: null
+  -
+    gbox: "ScanpyGeneFiltering"
+    initialState: null
+  -
+    gbox: "ScanpyNormalization"
+    initialState: null
+  -
+    gbox: "LogTransformation"
+    initialState: null
+  -
+    gbox: "ScanpyPseudotime"
+    initialState: null

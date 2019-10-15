@@ -1,0 +1,288 @@
+{
+    "$schema": "http://json-schema.org/draft-07/schema#",
+    "additionalProperties": false,
+    "definitions": {
+        "IGboxSpec": {
+            "additionalProperties": false,
+            "properties": {
+                "endpoints": {
+                    "additionalProperties": true,
+                    "properties": {
+                    },
+                    "type": "object"
+                },
+                "frontend": {
+                    "anyOf": [
+                        {
+                            "additionalProperties": false,
+                            "properties": {
+                                "args": {
+                                    "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "choices": {
+                                                "items": {
+                                                    "additionalProperties": false,
+                                                    "properties": {
+                                                        "description": {
+                                                            "type": "string"
+                                                        },
+                                                        "label": {
+                                                            "type": "string"
+                                                        },
+                                                        "value": {
+                                                        }
+                                                    },
+                                                    "required": [
+                                                        "value"
+                                                    ],
+                                                    "type": "object"
+                                                },
+                                                "type": "array"
+                                            },
+                                            "default": {
+                                            },
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "injectInto": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "max": {
+                                                "type": "number"
+                                            },
+                                            "min": {
+                                                "type": "number"
+                                            },
+                                            "step": {
+                                                "type": "number"
+                                            },
+                                            "type": {
+                                                "enum": [
+                                                    "checkbox",
+                                                    "number",
+                                                    "samplePicker",
+                                                    "seed",
+                                                    "select",
+                                                    "text"
+                                                ],
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "default",
+                                            "injectInto",
+                                            "label",
+                                            "type"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "exports": {
+                                    "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "extractFrom": {
+                                                "type": "string"
+                                            },
+                                            "kind": {
+                                                "enum": [
+                                                    "assay",
+                                                    "geneCoords",
+                                                    "geneMeta",
+                                                    "sampleCoords",
+                                                    "sampleMeta"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "meta": {
+                                            }
+                                        },
+                                        "required": [
+                                            "extractFrom",
+                                            "kind"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "imports": {
+                                    "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "injectInto": {
+                                                "type": "string"
+                                            },
+                                            "kind": {
+                                                "enum": [
+                                                    "assay",
+                                                    "geneCoords",
+                                                    "geneMeta",
+                                                    "sampleCoords",
+                                                    "sampleMeta"
+                                                ],
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "required": [
+                                            "injectInto",
+                                            "kind",
+                                            "label"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                },
+                                "uploadedFiles": {
+                                    "items": {
+                                        "additionalProperties": false,
+                                        "properties": {
+                                            "description": {
+                                                "type": "string"
+                                            },
+                                            "injectInto": {
+                                                "type": "string"
+                                            },
+                                            "label": {
+                                                "type": "string"
+                                            },
+                                            "optional": {
+                                                "type": "boolean"
+                                            }
+                                        },
+                                        "required": [
+                                            "injectInto",
+                                            "label"
+                                        ],
+                                        "type": "object"
+                                    },
+                                    "type": "array"
+                                }
+                            },
+                            "type": "object"
+                        },
+                        {
+                            "type": "string"
+                        }
+                    ]
+                },
+                "id": {
+                    "type": "string"
+                },
+                "meta": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "citations": {
+                            "items": {
+                                "additionalProperties": false,
+                                "properties": {
+                                    "bibtex": {
+                                        "type": "string"
+                                    }
+                                },
+                                "required": [
+                                    "bibtex"
+                                ],
+                                "type": "object"
+                            },
+                            "type": "array"
+                        },
+                        "description": {
+                            "type": "string"
+                        },
+                        "maintainer": {
+                            "additionalProperties": false,
+                            "properties": {
+                                "email": {
+                                    "type": "string"
+                                },
+                                "name": {
+                                    "type": "string"
+                                }
+                            },
+                            "required": [
+                                "name"
+                            ],
+                            "type": "object"
+                        },
+                        "subtitle": {
+                            "type": "string"
+                        },
+                        "title": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "subtitle",
+                        "title"
+                    ],
+                    "type": "object"
+                }
+            },
+            "required": [
+                "frontend",
+                "id",
+                "meta"
+            ],
+            "type": "object"
+        }
+    },
+    "properties": {
+        "buildCommand": {
+            "type": "string"
+        },
+        "gboxes": {
+            "items": {
+                "anyOf": [
+                    {
+                        "$ref": "#/definitions/IGboxSpec"
+                    },
+                    {
+                        "type": "string"
+                    }
+                ]
+            },
+            "type": "array"
+        },
+        "id": {
+            "type": "string"
+        },
+        "meta": {
+            "additionalProperties": false,
+            "properties": {
+                "maintainer": {
+                    "additionalProperties": false,
+                    "properties": {
+                        "email": {
+                            "type": "string"
+                        },
+                        "name": {
+                            "type": "string"
+                        }
+                    },
+                    "required": [
+                        "name"
+                    ],
+                    "type": "object"
+                }
+            },
+            "type": "object"
+        }
+    },
+    "required": [
+        "gboxes",
+        "id"
+    ],
+    "type": "object"
+}
+

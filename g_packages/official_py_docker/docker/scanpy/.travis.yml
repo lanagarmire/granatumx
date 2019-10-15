@@ -1,0 +1,8 @@
+language: python
+python:
+  - "3.6"
+install: source .travis_install.sh
+script:
+  - pytest
+  - python setup.py check --restructuredtext --strict
+  - rst2html.py --halt=2 README.rst >/dev/null

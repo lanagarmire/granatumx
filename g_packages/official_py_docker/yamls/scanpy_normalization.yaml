@@ -1,0 +1,50 @@
+id: ScanpyNormalization
+meta:
+  title: Cell Normalization
+  subtitle: >-
+    Normalize expression levels by cells using either Quantile Normalization
+    or Scanpy Normalization
+  description: >
+    Normalize expression levels by cells using either Quantile Normalization
+    or Scanpy Normalization.
+
+    Cell normalization is a common pre-processing technique that eliminates the
+    unwanted variation between the cells caused by the different library sizes and
+    different data distribution.
+endpoints:
+  backend:
+    type: docker
+    image: granatum/py
+    cmd: python ./scanpy_normalization.py
+frontend:
+  args:
+    - type: checkbox
+      label: Log transform in the boxplots
+      default: false
+      injectInto: log_trans_when_plot
+      description: Use log(x + 1) in the boxplots. Recommended for non-log transformed assays to have visualization clarity.
+    - type: select
+      label: Normalization method
+      default: quantile
+      choices:
+        - value: quantile
+          label: Quantile normalization
+        - value: scanpy
+          label: Scanpy default normalization
+      injectInto: method
+    - max: 1000
+      min: 1
+      type: number
+      label: Number of cells to plot in the bar-plot
+      default: 40
+      injectInto: num_cells_to_sample
+      description: >-
+        Plotting too many cells in the same bar-plot will render the plot
+        intelligible.
+  exports:
+    - kind: assay
+      extractFrom: Normalized assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay

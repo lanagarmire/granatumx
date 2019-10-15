@@ -1,0 +1,29 @@
+id: "49291a60-0c21-455b-aa9f-bb71ed7e2dfa"
+meta:
+  title: "Quick visualization"
+  subtitle: "Get a quick overview of your samples"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState: null
+  -
+    gbox: "ScanpyDownsampling"
+    initialState: null
+  -
+    gbox: "ScanpyGeneFiltering"
+    initialState: null
+  -
+    gbox: "ScanpyNormalization"
+    initialState: null
+  -
+    gbox: "LogTransformation"
+    initialState: null
+  -
+    gbox: "ScanpyPCA"
+    initialState: null
+  -
+    gbox: "ScanpyTsne"
+    initialState: null

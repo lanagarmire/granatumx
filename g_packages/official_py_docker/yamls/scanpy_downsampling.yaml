@@ -1,0 +1,55 @@
+id: ScanpyDownsampling
+meta:
+  title: Cell Downsampling
+  subtitle: >-
+    Sample only a fraction of cells to reduce the size of the data (backed by
+    Scanpy)
+  citations:
+    - bibtex: |
+        @article{wolf2018scanpy,
+          title={SCANPY: Large-scale single-cell gene expression data analysis},
+          author={Wolf, F Alexander and Angerer, Philipp and Theis, Fabian J},
+          journal={Genome biology},
+          volume={19},
+          number={1},
+          pages={15},
+          year={2018},
+          publisher={BioMed Central}
+        }
+  description: >
+    Reduce the size of the data by sampling only a fraction of cells (backed by
+    Scanpy)
+endpoints:
+  backend:
+    cmd: python ./scanpy_downsampling.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: samplePicker
+      label: Cells to remove
+      default: []
+      injectInto: cells_to_remove
+      description: Select cells to be removed
+    - type: number
+      label: Number of cells to sample
+      default: 1000
+      injectInto: num_cells_to_sample
+      description: >
+        If the input number is greater than 0 and less than 1, it is understood
+        as a percentage of the original number of cells to sample. If the input
+        number is greater than or equal to 1 and is an integer, it is understood
+        as the desired number of cells after down-sampling. If it is greater
+        than the number of the number of cells, all cells will be kept.
+    - type: seed
+      label: Random seed
+      default: 12345
+      injectInto: random_seed
+  exports:
+    - kind: assay
+      meta: {}
+      extractFrom: Down-sampled Assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay

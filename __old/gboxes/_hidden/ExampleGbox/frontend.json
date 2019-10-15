@@ -1,0 +1,32 @@
+{
+  /* The unique identifier of the Gbox (no space)*/
+  "gbox": "MyOwnGbox",
+  /* The title of the Gbox (displayed on top of the page)*/
+  "title": "My own Gbox",
+  /* Briefly describe the main goal of your module */
+  "description": "This module computes ...",
+  /* Your name and contact */
+  "maintainer": {
+    "name": "John Doe",
+    "email": "jdoe@gmail.com"
+  },
+  /* The main citation of your Gbox */
+  "citation": {
+    "bibtex": "@article{...}"
+  },
+  /* Specify the data to retrieve from the database */
+  "imports": [
+    {
+      "kind": "assay",
+      "name": "inputAssay",
+      "label": "The assay to use",
+      "description": "The assay will be ..."
+    }
+  ],
+  /* Specify the data to write to the database */
+  "exports": [/*...*/],
+  /* Specify the extra argument(s) needed from the user */
+  "args": [/*...*/],
+  /* Specify the results to show to the user */
+  "results": [/*...*/]
+}

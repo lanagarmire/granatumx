@@ -1,0 +1,21 @@
+id: FrobeniusNormalization
+meta:
+  title: Frobenius Normalization
+  subtitle: >-
+    Divide the assay by its Frobenius Norm
+  description: >
+    Divide the assay by its Frobenius Norm. This can be used as preprocessing step for the JAMMIT algorithm as JAMMIT
+    prefers the the sum of the matrix's eigen-values be equal to 1.
+endpoints:
+  backend:
+    cmd: python ./frobenius_norm.py
+    type: docker
+    image: granatum/py
+frontend:
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay
+  exports:
+    - kind: assay
+      extractFrom: Frobenius normalized assay

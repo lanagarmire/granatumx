@@ -1,0 +1,83 @@
+{
+  "gbox": "Normalization",
+  "title": "Normalization",
+  "maintainer": {
+    "name": "Thomas K. Wolfgruber",
+    "email": "twolfgruber@cc.hawaii.edu"
+  },
+  "bibtex": "@article{Zhu2017,doi = {10.1186/s13073-017-0492-3},url = {https://doi.org/10.1186/s13073-017-0492-3},year  = {2017},month = {dec},publisher = {Springer Nature},volume = {9},number = {1},author = {Xun Zhu and Thomas K. Wolfgruber and Austin Tasato and C{\'{e}}dric Arisdakessian and David G. Garmire and Lana X. Garmire},title = {Granatum: a graphical single-cell {RNA}-Seq analysis pipeline for genomics scientists},journal = {Genome Medicine}}"
+  "description": "Accepts counts assay. Returns normalized log transformed assay and plot of up to 96 samples. The normalization methods are described in Zhu, et al. 2017.",
+  "imports": [{"kind": "assay", "name": "assay", "label": "Counts assay"}],
+  "exports": [
+    {
+      "kind": "arg",
+      "name": "normalizationMethod",
+      "default": "Normalization method",
+      "label": "Selected normalization method"
+    },
+    {
+      "kind": "assay",
+      "name": "normalizedAssay",
+      "default": "Normalized assay",
+      "label": "Normalized assay"
+    },
+    {
+      "kind": "plot",
+      "name": "normalizedPlot",
+      "default": "Normalized assay plot",
+      "label": "Plot PNG in base64 encoding"
+    }
+  ],
+  "args": [
+    {
+      "type": "select",
+      "default": "Quantile_normalization",
+      "name": "normalizationMethod",
+      "label": "Normalization method",
+      "choices": [
+        {
+          "name": "Quantile_normalization",
+           "description": "Quantile normalization (recommended)."
+        },
+        {
+          "name": "Size-factor_normalization",
+          "description": "Size-factor normalization."
+        },
+        {
+          "name": "Rescale_to_geometric_mean",
+          "description": "Geometric mean normalization: rescale expression levels to make all samples have the same geometric mean."
+        },
+        {
+          "name": "Voom",
+          "description": "Voom normalization."
+        }
+    }
+  ],
+  "results": [
+    {
+      "type": "text",
+      "label": "Normalization method",
+      "name": "normalizationMethod",
+      "description": "Method selected to normalize the assay."
+    },
+    {
+      "type": "text",
+      "label": "Normalized assay",
+      "name": "normalizedAssay",
+      "description": "Normalized log transformed assay."
+    },
+    {
+      "type": "text",
+      "label": "Normalized assay plot",
+      "name": "normalizedPlot",
+      "description": "Normalized expression values for a random subset of samples are shown as box plots in black and as mean value dots in red."
+    },
+    {
+      "type": "iframe",
+      "width": 850,
+      "height": 650,
+      "name": "plotFigureHtml",
+      "description": "Normalized expression values for a random subset of samples are shown as box plots in black and as mean value dots in red."
+    }
+  ]
+}

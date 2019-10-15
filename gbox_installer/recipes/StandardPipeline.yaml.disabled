@@ -1,0 +1,38 @@
+id: "c9f393da-ec82-4653-8aca-26726bfcc2e6"
+meta:
+  title: "Standard Pipeline"
+  subtitle: "The classic pipeline provided in Granatum 1"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState: null
+  -
+    gbox: "Imputation"
+    initialState: null
+  -
+    gbox: "DimReduction"
+    initialState: null
+  -
+    gbox: "InteractiveOutlierRemoval"
+    initialState: null
+  -
+    gbox: "DimReduction"
+    initialState: null
+  -
+    gbox: "Normalization"
+    initialState: null
+  -
+    gbox: "GeneFiltering"
+    initialState: null
+  -
+    gbox: "SampleClustering"
+    initialState: null
+  -
+    gbox: "DifferentialExpression"
+    initialState: null
+  -
+    gbox: "MonoclePseudotime"
+    initialState: null

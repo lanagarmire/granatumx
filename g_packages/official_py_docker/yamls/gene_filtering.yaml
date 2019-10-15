@@ -1,0 +1,59 @@
+id: GeneFiltering
+meta:
+  title: Gene Filtering
+  subtitle: >-
+    Remove genes that are not expressed at all across all samples.
+  citations:
+    - bibtex: |
+        @article{wolf2018scanpy,
+          title={SCANPY: Large-scale single-cell gene expression data analysis},
+          author={Wolf, F Alexander and Angerer, Philipp and Theis, Fabian J},
+          journal={Genome biology},
+          volume={19},
+          number={1},
+          pages={15},
+          year={2018},
+          publisher={BioMed Central}
+        }
+    - bibtex: |
+        @article{satija2015spatial,
+          title={Spatial reconstruction of single-cell gene expression data},
+          author={Satija, Rahul and Farrell, Jeffrey A and Gennert, David and Schier, Alexander F and Regev, Aviv},
+          journal={Nature biotechnology},
+          volume={33},
+          number={5},
+          pages={495},
+          year={2015},
+          publisher={Nature Publishing Group}
+        }
+  description: >
+    Remove genes that are expressed too lowly (count-based filtering), and
+    extract genes that are highly varied across cells (dispersion-based
+    filtering).
+
+    The filtering is backended by
+    [Scanpy](https://scanpy.readthedocs.io/en/latest/). The filtering method is
+    described in [Satija et al. 2015](https://doi.org/10.1038/nbt.3192).
+endpoints:
+  backend:
+    cmd: python ./gene_filtering.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: number
+      label: The gene has to be expressed in at least ___ cells
+      default: 1
+      injectInto: min_cells_expressed
+    - type: number
+      label: The minimum expression level under which the gene is considered non-expressing
+      default: 0.001
+      injectInto: epsilon
+  exports:
+    - kind: assay
+      meta: {}
+      extractFrom: Filtered Assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay

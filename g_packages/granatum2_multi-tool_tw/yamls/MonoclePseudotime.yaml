@@ -1,0 +1,48 @@
+id: MonoclePseudotime
+meta:
+  title: Pseudo-time construction
+  citations:
+    - bibtex: |
+        @article{Trapnell2014,
+          doi = {10.1038/nbt.2859},
+          url = {https://doi.org/10.1038/nbt.2859},
+          year  = {2014},
+          month = {mar},
+          publisher = {Springer Nature},
+          volume = {32},
+          number = {4},
+          pages = {381--386},
+          author = {
+            Cole Trapnell and Davide Cacchiarelli and Jonna Grimsby and Prapti Pokharel and Shuqiang Li
+            and Michael Morse and Niall J Lennon and Kenneth J Livak and Tarjei S Mikkelsen and John L Rinn
+          },
+          title = {
+            The dynamics and regulators of cell fate decisions are revealed by pseudotemporal
+            ordering of single cells
+          },
+          journal = {Nature Biotechnology}
+        }
+  subtitle: Constructing differentiation trajectory with Monocle
+  description: >
+    This step orders cells in pseudo-time by learning from single-cell assay
+    data using Reversed Graph Embedding. The position of each cell in the
+    resulting plot is expected to reflect its relative biological state along
+    one or more potential cell trajectories.
+endpoints:
+  backend:
+    cmd: ./run_pseudo-time.sh
+    type: docker
+    image: granatum2_multi-tool_tw
+frontend:
+  args:
+    - type: seed
+      label: Random seed
+      default: 12345
+      injectInto: seed
+  imports:
+    - kind: assay
+      label: The assay to use for pseudo-time cell ordering
+      injectInto: assay
+    - kind: sampleMeta
+      label: The sample metadata for cell coloring in plot
+      injectInto: sampleMeta

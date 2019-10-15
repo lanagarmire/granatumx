@@ -1,0 +1,11 @@
+id: lncrna
+
+meta:
+  maintainer:
+    name: Xun Zhu
+    email: zhuxun2@gmail.com
+
+gboxes:
+  - ./yamls/predict_lung_cancer_risk_from_20_lncRNA.yaml
+
+buildCommand: 'cd docker && make'

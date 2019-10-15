@@ -1,0 +1,29 @@
+id: "a8d321b3-9f26-425c-afb2-efe8b04a8040"
+meta:
+  title: "Pseudo-time construction pipeline"
+  subtitle: "The minimum steps needed for Pseudo-time analysis"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState: null
+  -
+    gbox: "Imputation"
+    initialState: null
+  -
+    gbox: "DimReduction"
+    initialState: null
+  -
+    gbox: "InteractiveOutlierRemoval"
+    initialState: null
+  -
+    gbox: "Normalization"
+    initialState: null
+  -
+    gbox: "GeneFiltering"
+    initialState: null
+  -
+    gbox: "MonoclePseudotime"
+    initialState: null

@@ -1,0 +1,26 @@
+id: ExpressionLevelOnScatterPlot
+meta:
+  title: Color Scatter-Plot (Exp. Lvl.)
+  subtitle: >-
+    Color the dots on the scatter-plot with the expression levels of a selected gene.
+  description: >
+    Color the dots on the scatter-plot with the expression levels of a selected gene.
+endpoints:
+  backend:
+    type: docker
+    image: granatum/py
+    cmd: python ./color_scatterplot_by_exp_lvls.py
+frontend:
+  imports:
+    - kind: assay
+      label: The assay to take expression values from
+      injectInto: assay
+    - kind: sampleCoords
+      label: The visualization to plot
+      injectInto: viz_data
+  args:
+    - type: text
+      injectInto: gene_id
+      label: The gene ID to use for coloring
+      description: Must be a gene ID appearing in the assay selected.
+      default: ''

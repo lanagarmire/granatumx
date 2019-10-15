@@ -1,0 +1,45 @@
+{
+  "results": {
+    "table: 0 vs. all": {
+      "data": [
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 }
+      ]
+    },
+    "table: 1 vs. all": {
+      "data": [
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 }
+      ]
+    },
+    "table: 2 vs. all": {
+      "data": [
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 },
+        { "Gene": "zcvxcv", "Fisher": 12321, "FDR": 342134, "adfa": 123213 }
+      ]
+    }
+  },
+  "exports": {
+    "0 vs. all: Fisher": { "gene001": 0.142, "gene002": 0.643 },
+    "0 vs. all: FDR": { "gene001": 0.532, "gene002": 0.834 },
+    "1 vs. all: Fisher": { "gene001": 0.142, "gene002": 0.643 },
+    "1 vs. all: FDR": { "gene001": 0.532, "gene002": 0.834 },
+    "2 vs. all: Fisher": { "gene001": 0.142, "gene002": 0.643 },
+    "2 vs. all: FDR": { "gene001": 0.532, "gene002": 0.834 }
+  }
+}

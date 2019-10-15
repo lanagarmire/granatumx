@@ -1,0 +1,108 @@
+id: UMAP
+meta:
+  title: UMAP
+  subtitle: >
+    A dimension reduction technique that can be used for visualisation similarly to t-SNE
+  description: >
+    Uniform Manifold Approximation and Projection (UMAP) is a dimension reduction technique that can be used for
+    visualisation similarly to t-SNE, but also for general non-linear dimension reduction. The algorithm is founded on
+    three assumptions about the data
+
+      * The data is uniformly distributed on a Riemannian manifold;
+      * The Riemannian metric is locally constant (or can be approximated as such);
+      * The manifold is locally connected.
+
+    From these assumptions it is possible to model the manifold with a fuzzy topological structure. The embedding is
+    found by searching for a low dimensional projection of the data that has the closest possible equivalent fuzzy
+    topological structure.
+
+    The details for the underlying mathematics can be found in [McInnes, L, Healy, J, and Melville, J](https://arxiv.org/abs/1802.03426).
+endpoints:
+  backend:
+    cmd: python ./run_umap.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - injectInto: n_neighbors
+      type: number
+      label: Number of neighbors (n_neighbors, an integer)
+      description: >-
+        This parameter controls how UMAP balances local versus global structure in the data. It does this by
+        constraining the size of the local neighborhood UMAP will look at when attempting to learn the manifold
+        structure of the data. This means that low values of `n_neighbors` will force UMAP to concentrate on very local
+        structure (potentially to the detriment of the big picture), while large values will push UMAP to look at larger
+        neighborhoods of each point when estimating the manifold structure of the data, losing fine detail structure for
+        the sake of getting the broader of the data.
+      default: 15
+    - injectInto: min_dist
+      type: number
+      label: Minimum distance (min_dist, a real number ranges from 0 to 1)
+      description: >-
+        The `min_dist` parameter controls how tightly UMAP is allowed to pack points together. It, quite literally,
+        provides the minimum distance apart that points are allowed to be in the low dimensional representation. This
+        means that low values of `min_dist` will result in clumpier embeddings. This can be useful if you are interested
+        in clustering, or in finer topological structure. Larger values of `min_dist` will prevent UMAP from packing
+        point together and will focus instead on the preservation of the broad topological structure instead.
+      default: 0.1
+    - injectInto: metric
+      type: select
+      label: Metric (metric)
+      description: >-
+        This parameter controls how distance is computed in the ambient space of the input data.
+      choices:
+        - value: euclidean
+          label: Euclidean
+        - value: manhattan
+          label: Manhattan
+        - value: chebyshev
+          label: Chebyshev
+        - value: minkowski
+          label: Minkowski
+
+        - value: canberra
+          label: Canberra
+        - value: braycurtis
+          label: Braycurtis
+        - value: haversine
+          label: Haversine
+
+        - value: mahalanobis
+          label: Mahalanobis
+        - value: wminkowski
+          label: Wminkowski
+        - value: seuclidean
+          label: Seuclidean
+
+        - value: cosine
+          label: Cosine
+        - value: correlation
+          label: Correlation
+
+        - value: hamming
+          label: Hamming
+        - value: jaccard
+          label: Jaccard
+        - value: dice
+          label: Dice
+        - value: russellrao
+          label: Russellrao
+        - value: kulsinski
+          label: Kulsinski
+        - value: rogerstanimoto
+          label: Rogerstanimoto
+        - value: sokalmichener
+          label: Sokalmichener
+        - value: sokalsneath
+          label: Sokalsneath
+        - value: yule
+          label: Yule
+
+      default: euclidean
+  exports:
+    - kind: sampleCoords
+      extractFrom: UMAP coordinates
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay

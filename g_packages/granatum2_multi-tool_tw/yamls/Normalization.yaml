@@ -1,0 +1,40 @@
+id: Normalization
+meta:
+  title: Normalization
+  subtitle: >-
+    Balance the expression values between the samples to reduce certain
+    confounding factors
+  description: >
+    Accepts counts assay. Returns normalized log transformed assay and plot of
+    up to 96 samples. The normalization methods are described in Zhu, et al.
+    2017.
+endpoints:
+  backend:
+    cmd: Rscript normalize_xzhu.R
+    type: docker
+    image: granatum2_multi-tool_tw
+frontend:
+  args:
+    - type: select
+      label: Normalization method
+      choices:
+        - label: Quantile normalization (recommended)
+          value: Quantile_normalization
+        - label: Size-factor normalization
+          value: Size-factor_normalization
+        - label: Geometric mean normalization
+          value: Rescale_to_geometric_mean
+          description: >-
+            Rescale expression levels to make all samples have the same
+            geometric mean
+        - label: Voom normalization
+          value: Voom
+      default: Quantile_normalization
+      injectInto: normalizationMethod
+  exports:
+    - kind: assay
+      extractFrom: normalizedAssay
+  imports:
+    - kind: assay
+      label: Counts assay
+      injectInto: assay

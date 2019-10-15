@@ -1,0 +1,71 @@
+id: DeepImpute
+
+meta:
+  maintainer:
+    name: Cedric Arisdakessian
+    email: cedric.arisdakessian@gmail.com
+
+buildCommand: 'cd docker && make'
+
+gboxes:
+  - id: DeepImpute_v2
+    meta:
+      title: DeepImpute_v2
+      subtitle: 'Single-cell RNA-seq imputation using Deep learning'
+      description: |
+        DeepImpute (Deep learning Imputation) is a neural network based imputation
+        algorithm.
+
+        DeepImpute divides the data into subsets and builds separate neural
+        networks to impute the missing values. Its architecture makes efficient use of
+        dropout layers and loss functions to learn patterns in the data.
+    endpoints:
+      backend:
+        type: docker
+        image: deepimpute2
+        cmd: python ./run_deepimpute.py
+    frontend:
+      args:
+        - type: seed
+          injectInto: seed
+          default: 12345
+          label: Random seed
+          description: >
+            The randomness is involved in two different step in this algorithm. The
+            first one is during the creation of sub-neural-networks: genes are split in
+            random subsets and imputed in a separate sub-network. The second is during the
+            neural network training: the mini-batch gradient descent algorithm, as well as
+            the data that is shuffled at each epoch add another layer of
+            randomness.'
+
+        - type: checkbox
+          injectInto: use_auto_limit
+          default: true
+          label: Use automatic gene imputation limit
+          description: |
+            Some genes have too many dropouts and cannot be imputed. Lowering the
+            limit can improve the speed and the quality of the imputation by focusing on
+            more important data. The automatic limit is set to all genes which a 99%
+            percentile above 5 reads.'
+
+        - type: number
+          injectInto: NN_lim
+          default: 2000
+          label: Gene rank limit
+          description: 'Limit in the gene ranks (based on their 99th percentile value)'
+
+        - type: number
+          injectInto: cell_subset
+          default: 1
+          label: Cell subset
+          description: 'If you want to use only a subset of the entire cells to fit the model and speed up the imputation'
+
+      imports:
+        - kind: assay
+          label: Assay
+          injectInto: assay
+
+      exports:
+        - kind: assay
+          extractFrom: Imputed assay
+          meta: {}

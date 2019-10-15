@@ -1,0 +1,39 @@
+id: official_py_docker
+
+meta:
+  maintainer:
+    name: Xun Zhu
+    email: zhuxun@gmail.com
+
+gboxes:
+  - ./yamls/color_scatterplot_by_exp_lvls.yaml
+  - ./yamls/combine_assays.yaml
+  - ./yamls/dim_reduction.yaml
+  - ./yamls/interactive_outlier_removal.yaml
+  - ./yamls/log_transformation.yaml
+  - ./yamls/parse_uploaded_files.yaml
+  - ./yamls/sample_coloring.yaml
+  - ./yamls/scanpy_clustering.yaml
+  - ./yamls/scanpy_downsampling.yaml
+  - ./yamls/scanpy_gene_filtering.yaml
+  - ./yamls/scanpy_marker_genes.yaml
+  - ./yamls/scanpy_normalization.yaml
+  - ./yamls/scanpy_pca.yaml
+  - ./yamls/scanpy_pseudotime.yaml
+  - ./yamls/scanpy_tsne.yaml
+  - ./yamls/clustering_quality_measure.yaml
+  - ./yamls/jammit_scan.yaml
+  - ./yamls/jammit_scan_joint.yaml
+  - ./yamls/jammit_analyze.yaml
+  - ./yamls/frobenius_norm.yaml
+  - ./yamls/zgsea.yaml
+  - ./yamls/glog.yaml
+  - ./yamls/gene_filtering.yaml
+  - ./yamls/gene_centering.yaml
+  - ./yamls/clustering.yaml
+  - ./yamls/umap.yaml
+  - ./yamls/enrichment.yaml
+  - ./yamls/beta_to_m.yaml
+  - ./yamls/mnnpy.yaml
+
+buildCommand: 'cd docker && make'

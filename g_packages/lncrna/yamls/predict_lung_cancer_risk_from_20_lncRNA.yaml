@@ -1,0 +1,105 @@
+id: pred_lung_cancer_risk_on_20_lncRNAs
+meta:
+  title: Predict lung cancer on 20 lncRNAs
+  subtitle: >-
+    Predict lung cancer on 20 lncRNAs
+  maintainer:
+    name: Tianying Zhao
+    email: tianying@hawaii.edu
+  description: |
+    A panel of lncRNAs for lung cancer diagnosis.
+    Please input lncRNA expression values.
+    The results will be the probabilities.
+
+    ![](https://lungcanceralliance.org/wp-content/uploads/2017/10/FightingBack.gif)
+endpoints:
+  backend:
+    cmd: "Rscript ./predict_lung_cancer_risk_from_20_lncRNA.R"
+    type: docker
+    image: granatum/lncrna
+frontend:
+  args:
+    - type: number
+      label: Number of trees
+      default: 400
+      injectInto: n_trees
+    - type: number
+      label: TMPO.AS1.202
+      default: 1.4743
+      injectInto: TMPO.AS1.202
+    - type: number
+      label: SBF2.AS1.201
+      default: 1.9741
+      injectInto: SBF2.AS1.201
+    - type: number
+      label: MAFG.AS1.201
+      default: 1.4311
+      injectInto: MAFG.AS1.201
+    - type: number
+      label: LINC01852.201
+      default: -1.244
+      injectInto: LINC01852.201
+    - type: number
+      label: LINC01614.201
+      default: 4.2786
+      injectInto: LINC01614.201
+    - type: number
+      label: LINC00261.202
+      default: -3.3566
+      injectInto: LINC00261.202
+    - type: number
+      label: HHIP.AS1.203
+      default: -2.4408
+      injectInto: HHIP.AS1.203
+    - type: number
+      label: HHIP.AS1.201
+      default: -2.4408
+      injectInto: HHIP.AS1.201
+    - type: number
+      label: CARD8.AS1.201
+      default: -1.8626
+      injectInto: CARD8.AS1.201
+    - type: number
+      label: AL109741.1.201
+      default: -1.919
+      injectInto: AL109741.1.201
+    - type: number
+      label: AC146944.4.201
+      default: -2.2105
+      injectInto: AC146944.4.201
+    - type: number
+      label: AC027288.3.203
+      default: -2.9513
+      injectInto: AC027288.3.203
+    - type: number
+      label: LINC02555.201
+      default: -2.2316
+      injectInto: LINC02555.201
+    - type: number
+      label: LINC01936.201
+      default: -2.7182
+      injectInto: LINC01936.201
+    - type: number
+      label: TBX5.AS1.201
+      default: -3.0855
+      injectInto: TBX5.AS1.201
+    - type: number
+      label: HSPC324.201
+      default: -2.0386
+      injectInto: HSPC324.201
+    - type: number
+      label: GATA6.AS1.202
+      default: -1.7441
+      injectInto: GATA6.AS1.202
+    - type: number
+      label: AP000866.2.201
+      default: -2.4003
+      injectInto: AP000866.2.201
+    - type: number
+      label: ADAMTS9.AS2.203
+      default: -1.4026
+      injectInto: ADAMTS9.AS2.203
+    - type: number
+      label: AC008268.1.201
+      default: -5.5543
+      injectInto: AC008268.1.201

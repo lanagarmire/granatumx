@@ -1,0 +1,52 @@
+meta:
+  title: "Differential expression"
+  subtitle: "Identify differentially expressed genes between groups"
+  maintainer:
+    name: "Thomas K. Wolfgruber"
+    email: "twolfgruber@cc.hawaii.edu"
+  citation:
+    bibtex: >
+      '@article{Zhu2017,doi = {10.1186/s13073-017-0492-3},url = {https://doi.org/10.1186/s13073-017-0492-3},year  =
+      {2017},month = {dec},publisher = {Springer Nature},volume = {9},number = {1},author
+      = {Xun Zhu and Thomas K. Wolfgruber and Austin Tasato and C{\''{e}}dric Arisdakessian
+      and David G. Garmire and Lana X. Garmire},title = {Granatum: a graphical single-cell
+      {RNA}-Seq analysis pipeline for genomics scientists},journal = {Genome Medicine}}'
+  description: >
+    "Accepts normalized assay and a selected method. Returns table having
+    a row for each feature with statistics indiciating whether or not it is differentially
+    expressed. The differential expression methods are described in Zhu, et al. 2017."
+endpoints:
+  backend:
+    type: "docker"
+    image: "granatum2_multi-tool_tw"
+    cmd: "Rscript ./de_with_sdk.R"
+frontend:
+  imports:
+  - kind: "assay"
+    name: "assay"
+    label: "Assay (use normalized assay, except for SCDE)"
+  - kind: "sampleMeta"
+    name: "sampleMeta"
+    label: 'Sample data with named "groups" to compare'
+  args:
+  - type: "select"
+    name: "deMethod"
+    label: "DE method"
+    default: "NODES"
+    choices:
+    - name: "NODES"
+      description: "NODES (single-cell)"
+    - name: "limma"
+      description: "limma (general)"
+    - name: "edgeR"
+      description: "edgeR (general)"
+    - name: "SCDE"
+      description: "SCDE (single cell; very slow) - WARNING! Expects raw counts, not a normalized matrix"
+    - type: "number"
+    name: "deCores"
+    label: 'Number of compute cores: '
+    default: 1
+  - type: "number"
+    name: "seed"
+    label: "Random seed"
+    default: 96813

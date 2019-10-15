@@ -1,0 +1,38 @@
+id: BetaToM
+meta:
+  title: Beta-to-m transformation
+  subtitle: Convert the methylation beta value into the m-value
+  description: >
+    Many methylation datasets use the Beta-value (ranging from 0 to 1) to measure the percentage of methylation. This
+    Gbox converts these values into the log2 ratio of the intensities of methylated probe versus unmethylated probe
+    (m-value).
+
+    The "epsilon" parameter is for avoiding infinite results. The full formula for this conversion is:
+
+        y = log((x + epsilon) / (1 - x + epsilon))
+endpoints:
+  backend:
+    cmd: python ./beta_to_m.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - injectInto: take_log
+      type: checkbox
+      default: true
+      label: Take log
+    - injectInto: logBase
+      type: number
+      default: 2
+      label: Log base
+    - injectInto: epsilon
+      type: number
+      default: 1e-7
+      label: epsilon
+  exports:
+    - kind: assay
+      extractFrom: Beta-to-m transformed assay
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay

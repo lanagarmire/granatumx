@@ -1,0 +1,43 @@
+<h1 id="deepimpute-an-accurate-and-efficient-deep-learning-method-for-single-cell-rna-seq-data-imputation">DeepImpute: an accurate and efficient deep learning method for single-cell RNA-seq data imputation</h1>
+<p>Arisdakessian, C et al. &quot;DeepImpute: an accurate and efficient deep learning method for single-cell RNA-seq data imputation&quot;, BioRxiv (2018): XXXX<br />DeepImpute has been implemented in python2 and python3. The recommanded version is python3.</p>
+<h2 id="getting-started">Getting Started</h2>
+<p>These instructions will get you a copy of the project up and running on your local machine for development and testing purposes.</p>
+<h3 id="installing">Installing</h3>
+<p>To install DeepImpute, you only need to download the git repository at https://github.com/lanagarmire/DeepImpute and install it using pip:</p>
+<pre><code>&gt;&gt; git clone https://github.com/lanagarmire/DeepImpute
+&gt;&gt; cd DeepImpute
+&gt;&gt; pip install -e . </code></pre>
+<h3 id="usage">Usage</h3>
+<p>DeepImpute can be used either in commandline or as a python package.</p>
+<p>Command line:</p>
+<pre><code>
+usage: deepImpute.py [-h] [-o outputFile] [--ncores NCORES]
+                     [--cell-axis {rows,columns}] [--lim LIM]
+                     [--subset SUBSET]
+                     inputFile
+
+scRNA-seq data imputation using DeepImpute.
+
+positional arguments:
+  inputFile             Path to input data.
+
+optional arguments:
+  -h, --help            show this help message and exit
+  -o outputFile         Path to output data counts. Default: ./
+  --cores NCORES       Number of cores. Default: 5
+  --cell-axis {rows,columns}
+                        Cell dimension in the matrix. Default: rows
+  --limit LIM             Genes to impute (e.g. first 2000 genes). Default: auto
+  --subset SUBSET       Cell subset to speed up training. Either a ratio
+                        (0&lt;x&lt;1) or a cell number (int). Default: 1 (all)</code></pre>
+<p>Python package:</p>
+<pre><code>from deepimpute import deepimpute
+
+data = pd.read_csv(&#39;../examples/test.csv&#39;,index_col=0) # dimension = (cells x genes)
+imputed = deepimpute(data,NN_lim=&#39;auto&#39;,ncores=10,cell_subset=1)
+imputed = deepimpute(data,NN_lim=&#39;auto&#39;,ncores=10,cell_subset=1,NN_params={&#39;layer1&#39;: {&#39;neurons&#39;: 50}})</code></pre>
+<p>A more detailed usage of deepImpute's functionnalities is available in the iPython Notebook notebook_example.ipynb</p>
+<h3 id="running-the-tests">Running the tests</h3>
+<p>Each file has been validated using a unittest script:</p>
+<pre><code>python SCRIPTNAME_test.py</code></pre>
+<h2 id="license">License</h2>

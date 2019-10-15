@@ -1,0 +1,11 @@
+id: scImpute
+
+meta:
+  maintainer:
+    name: Wei Vivian Li
+    email: liw@ucla.edu
+
+gboxes:
+  - ./frontend.yaml
+
+buildCommand: 'cd docker && make'

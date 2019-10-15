@@ -1,0 +1,39 @@
+id: "scImpute"
+title: "scImpute"
+subtitle: "Accurate and robust imputation of scRNA-seq data"
+citation: 
+  bibtex: "\n@article{li2017scimpute,\n  title={scImpute: accurate and robust imputation for single cell RNA-seq data},\n  author={Li, Wei Vivian and Li, Jingyi Jessica},\n  journal={bioRxiv},\n  pages={141598},\n  year={2017},\n  publisher={Cold Spring Harbor Laboratory}\n}\n"
+maintainer: 
+  name: "Cedric Arisdakessian"
+  email: "cedric.arisdakessian@gmail.com"
+description: >
+  Imputation is the process of filling missing data that an experiment failed to
+  capture. In comparison to bulk cell RNAseq, the starting amount of mRNA in
+  single cell RNAseq is very low which makes it difficult to capture the whole
+  gene expression values for each cell. The imputation step can be very useful
+  to increase the power of the downstream analysis.\n\nHere, we implemented
+  scImpute, an imputation method for single cell RNAseq using weighted LASSO.
+  There are several steps to this algorithm. First, for each gene, it estimates
+  the cell dropout probability using a gamma-gauss mixture model. Each cell can
+  then be sorted into dropout or not (using a threshold parameter). Then, it
+  imputes each cell independantly: Using the good quality genes, it builds a
+  weighted LASSO model to define predictors, and use these predictors to impute
+  the dropout values."
+imports: 
+  - label: "Raw count"
+    injectInto: "assay"
+    kind: "assay"
+    description: "Raw count matrix (not normalized)"
+args: 
+  - type: "number"
+    label: "Dropout threshold for imputation"
+    injectInto: "drop_thre"
+    min: 0
+    max: 1
+    default: 0.5
+    description: "The dropout threshold corresponds to an imputation limit: Cells with a dropout probability higher than this value will not be imputated."
+exports: 
+  - extractFrom: "Imputed Assay"
+    kind: "assay"
+    default: "Imputed Assay"
+

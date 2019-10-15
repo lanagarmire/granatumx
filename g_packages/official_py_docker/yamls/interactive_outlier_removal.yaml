@@ -1,0 +1,10 @@
+id: InteractiveOutlierRemoval
+meta:
+  title: Interactive outlier removal
+  subtitle: Pick unwanted samples from a scatter plot
+endpoints:
+  backend:
+    cmd: python ./interactive_outlier_removal.py
+    type: docker
+    image: granatum/py
+frontend: InteractiveOutlierRemoval

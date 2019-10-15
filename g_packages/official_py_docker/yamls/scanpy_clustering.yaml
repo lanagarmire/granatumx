@@ -1,0 +1,72 @@
+id: ScanpyClustering
+meta:
+  title: Clustering
+  subtitle: >-
+    Find groups of cells that are similar (Louvain graph-clustering, backed by
+    Scanpy)
+  citations:
+    - bibtex: |
+        @article{wolf2018scanpy,
+          title={SCANPY: Large-scale single-cell gene expression data analysis},
+          author={Wolf, F Alexander and Angerer, Philipp and Theis, Fabian J},
+          journal={Genome biology},
+          volume={19},
+          number={1},
+          pages={15},
+          year={2018},
+          publisher={BioMed Central}
+        }
+    - bibtex: |
+        @article{levine2015data,
+          title={Data-driven phenotypic dissection of AML reveals progenitor-like cells that correlate with prognosis},
+          author={Levine, Jacob H and Simonds, Erin F and Bendall, Sean C and Davis, Kara L and El-ad, D Amir and Tadmor, Michelle D and Litvin, Oren and Fienberg, Harris G and Jager, Astraea and Zunder, Eli R and others},
+          journal={Cell},
+          volume={162},
+          number={1},
+          pages={184--197},
+          year={2015},
+          publisher={Elsevier}
+        }
+    - bibtex: |
+        @article{blondel2008fast,
+          title={Fast unfolding of communities in large networks},
+          author={Blondel, Vincent D and Guillaume, Jean-Loup and Lambiotte, Renaud and Lefebvre, Etienne},
+          journal={Journal of statistical mechanics: theory and experiment},
+          volume={2008},
+          number={10},
+          pages={P10008},
+          year={2008},
+          publisher={IOP Publishing}
+        }
+  description: >
+    Louvain graph-clustering is a heuristic method that is based on modularity
+    optimization. It was shown in Louvain et al. 2008 "to outperform all other
+    known community detection methods in terms of computation time. Moreover,
+    the quality of the communities detected is very good, as measured by the
+    so-called modularity."
+endpoints:
+  backend:
+    cmd: python ./scanpy_clustering.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: seed
+      injectInto: random_seed
+      label: Random seed
+      description: >-
+        The Louvain algorithm has a randomly generated inital state which may
+        slightly affect the clustering result. Set this seed to a fixed number
+        ensures reproducibility.
+      default: 13513
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay
+    - kind: sampleCoords
+      label: Cell coordinates for visualization
+      injectInto: sampleCoords
+  exports:
+    - kind: sampleMeta
+      meta: {}
+      extractFrom: Cluster assignment

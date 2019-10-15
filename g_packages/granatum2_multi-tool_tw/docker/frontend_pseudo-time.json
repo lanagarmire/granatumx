@@ -1,0 +1,34 @@
+{
+  "gbox": "PseudotimePlot",
+  "title": "Pseudo-time plot",
+  "maintainer": {
+    "name": "Thomas K. Wolfgruber",
+    "email": "twolfgruber@cc.hawaii.edu"
+  },
+  "bibtex": "@article{Qiu2017,doi = {10.1101/110668},url = {https://doi.org/10.1101/110668},year  = {2017},month = {feb},publisher = {Cold Spring Harbor Laboratory},author = {Xiaojie Qiu and Qi Mao and Ying Tang and Li Wang and Raghav Chawla and Hannah Pliner and Cole Trapnell},title = {Reversed graph embedding resolves complex single-cell developmental trajectories}}",
+  "description": "This step orders cells in pseudo-time by learning from single-cell assay data using Reversed Graph Embedding. The position of each cell in the resulting plot is expected to reflect its relative biological state along one or more potential cell trajectories.",
+  "imports": [{ "kind": "assay", "name": "assay", "label": "The assay to use for pseudo-time cell ordering" }],
+  "exports": [
+    {
+      "kind": "pseudotimePlot",
+      "name": "Pesudo-time plot",
+      "default": "Pseudo-time plot",
+      "label": "Pseudo-time plot"
+    }
+  ],
+  "results": [
+    {
+      "type": "iframe",
+      "width": 850,
+      "height": 650,
+      "name": "plotFigureHtml",
+      "description": "The position of each cell in the plot is expected to reflect its relative biological state along one or more potential cell trajectories."
+    },
+    {
+      "type": "text",
+      "label": "Pseudo-time plot",
+      "name": "pseudotimePlot",
+      "description": "The position of each cell in the plot is expected to reflect its relative biological state along one or more potential cell trajectories."
+    }
+  ]
+}

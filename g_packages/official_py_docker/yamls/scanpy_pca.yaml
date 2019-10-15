@@ -1,0 +1,37 @@
+id: ScanpyPCA
+meta:
+  title: Principal Component Analysis
+  subtitle: Visualize the cells as points on a 2-D plane using PCA
+  description: |
+    This step calculates a lower-dimension embedding of the input assay using
+    [Principal component analysis
+    (PCA)](https://en.wikipedia.org/wiki/Principal_component_analysis), which
+    uses orthogonal transformation to convert a set of observations of possibly
+    correlated variables into a set of values of linearly uncorrelated
+    variables.
+endpoints:
+  backend:
+    cmd: python ./scanpy_pca.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: select
+      label: Number of top components to calculate
+      choices:
+        - label: Only the first two components (fastest)
+          value: 2
+          description: Only PC1 vs. PC2
+        - label: First three components
+          value: 3
+          description: 'PC1 vs. PC2, PC1 vs. PC3, and PC2 vs. PC3'
+        - label: First four components
+          value: 4
+          description: 'All combinations of PC1, PC2, PC3, and PC4'
+      default: 2
+      injectInto: num_top_comps
+  imports:
+    -
+      kind: assay
+      label: Assay
+      injectInto: assay

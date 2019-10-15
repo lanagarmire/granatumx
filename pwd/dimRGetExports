@@ -1,0 +1,30 @@
+#!/usr/bin/env python
+
+import json
+from sys import stdin, stdout, stderr
+from time import sleep
+
+input = json.load(stdin)
+
+if input.get('attachDynamic') == True:
+  output = {
+    'exports': [
+      {
+        "name": "This is purely a test",
+        "kind": "asdf",
+        "meta": {},
+        "extractFrom": "testDynamicExport",
+      },
+    ],
+    'results': [
+      {
+        "type": "text",
+        "label": "Test label",
+        "extractFrom": "testName",
+      },
+    ],
+  }
+else:
+  output = {}
+
+json.dump(output, stdout)

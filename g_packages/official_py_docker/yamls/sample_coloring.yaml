@@ -1,0 +1,32 @@
+id: SampleColoring
+meta:
+  title: Sample Coloring
+  subtitle: >-
+    Super-impose the value of a selected sample metadata onto the sample scatter plot
+  description: >
+    Super-impose the value of a selected sample metadata onto the sample scatter plot
+endpoints:
+  backend:
+    cmd: python ./sample_coloring.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: select
+      injectInto: coloring_type
+      default: categorical
+      label: The type of the sample metadata
+      choices:
+        - value: 'categorical'
+          label: 'Categorical (shown with distinct colors)'
+          description: 'Values like [a, a, b, b, c, c, ...]'
+        - value: 'continuous'
+          label: 'Continuous (shown with a continuous color map)'
+          description: 'Values like [1.32, 0.64, 3.23, ...]'
+  imports:
+    - kind: sampleCoords
+      label: Visualization data to plot
+      injectInto: viz_data
+    - kind: sampleMeta
+      label: Values to use as colors
+      injectInto: value

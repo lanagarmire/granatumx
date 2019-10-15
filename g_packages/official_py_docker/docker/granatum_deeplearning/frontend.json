@@ -1,0 +1,177 @@
+{
+  "gbox": "SampleClustering",
+  "title": "Clustering",
+  "maintainer": {
+     "name": "Olivier Poirion",
+     "email": "o.poirion@gmail.com"
+  },
+   "bibtex": "@article{...}",
+   "description": "Clustering, dimension reduction, and visualisation module using classic clustering algorithm. The module proposes to first reduce the dimension of the dataset, then in a second time to cluster the samples. Most of the clustering algorithms will have poor performances if the number of input features is too large. Also, some algorithms and dimension reduction approaches will be more adapted to some datasets. Most of these algorithms are based on the Scikit-Learn implementations, expect for HDBSCAN and our own implementation of the autoencoder. ",
+  "imports": [{ "kind": "assay", "name": "assay", "label": "The assay to use for clustering" }],
+  "exports": [
+    {
+      "kind": "sampleMeta",
+      "name": "clusters",
+      "default": "Cluster Assignment",
+      "label": "Name of the clustering assignment"
+    }
+  ],
+  "args": [
+    {
+      "type": "select",
+      "default": "WARD",
+      "name": "selectedClustering",
+      "label": "Clustering method",
+      "choices": [
+        {
+          "name": "kmeans",
+           "description": "Classic clustering algorithm. Pretty slow for large numbers of features / samples"
+        },
+        {
+          "name": "WARD",
+           "description": "Agglomerative hierarchical clustering algorithm. Faster than K-means."
+        },
+        {
+          "name": "DBSCAN",
+           "description": "Density-based clustering algorithm. Very fast but needs a few number of input features (such as 5). Also, this algorithm is based on density and thus doesn't require an input number of clusters. It is recommended to use DBSCAN with the `Find the best number of cluster` option. Finally, density algorithm can label samples as outliers if they doesn't fit any clusters inferred."
+        },
+        {
+          "name": "HDBSCAN",
+           "description": "Hierarchical DBSCAN. A version of DBSCAN that tests different epsilon and propose the most stable clusters. This algorithm is very fast but also requires a low number of input features (5). We used the the following python package (http://hdbscan.readthedocs.io)."
+        },
+        {
+          "name": "Agglomerative_correlation",
+           "description": "Agglomerative hierarchical clustering algorithm using the Pearson correlation distance as metric and an average linkage. This algorithm can perform well without reducing the dimension of the dataset, and is also fast."
+        },
+        {
+          "name": "Gaussian_Mixture",
+           "description": "Gaussian Mixture algorithm. This algorithm finds a multinomial gaussian model for each cluster. Each of the clusters will have a specific covariance model which makes this algorithm well adapted for clusters having different shapes or density. "
+        },
+        {
+          "name": "autoencoder",
+           "description": "Implementation of an autoencoder model. The nodes in the hidden bottleneck layers represent the different clusters and each sample is assigned to a cluster according to the activities of the hidden nodes. This algortihm is more a prototype of a real clustering method based on neural network, and the classic methods should be overall more performant. Furthermore, the autoencoder seems to be more performant when used as a dimension reduction approach, prior to clustering."
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "default": "PCA",
+      "name": "selectedEmbedding",
+      "label": "Embedding method",
+      "choices": [
+        {
+          "name": "PCA",
+           "description": "Principal Component Analysis algorithm."
+        },
+        {
+          "name": "IncrementalPCA",
+           "description": "An incremental version of PCA, fitted for very large dataset, and gives similar results than PCA. Will be usefull for future improvements of Granatum."
+        },
+        {
+          "name": "FactorAnalysis",
+           "description": "Factor Analysis (FA) algorithm. An alternative to PCA. Some experimental results suggests that FA is efficient to process scRNA-seq datasets."
+        },
+        {
+          "name": "FastICA",
+           "description": " Independent Component Analysis (ICA). ICA has been used by multiple studies to pre-process scRNA-seq data. "
+        },
+        {
+          "name": "NMF",
+           "description": "Non-negative Matrix factorization (NMF). NMF has been used by few study to process scRNA-seq data."
+        },
+        {
+          "name": "LatentDirichletAllocation",
+           "description": "Latent Dirichlet Allocation (LDA). This approach has previously benn used to process scRNA-seq data."
+        },
+        {
+          "name": "MDS",
+           "description": "Multi-Dimensional Scaling (MDS). A classic dimension-reduction algorithm"
+        },
+        {
+          "name": "autoencoder",
+           "description": "Our own implementation of an autoencoder neural-network, based on Keras. The activity of the hidden bottleneck layer nodes are used as new features. The autoencoder algorithm present the advantage to transform the data using non-linear activation function, and preliminary results showed that these type of approach revealed being efficient to separate single-cell populations."
+        },
+        {
+          "name": "None",
+           "description": "No dimension reduction methods is used."
+        }
+      ]
+    },
+    {
+      "type": "select",
+      "name": "selectedPlottingEmbedding",
+      "default": "PCA",
+      "label": "Plotting embedding method",
+      "choices": [
+        {
+          "name": "PCA",
+           "description": "Principal Component Analysis algorithm."
+        },
+        {
+          "name": "IncrementalPCA",
+           "description": "An incremental version of PCA, fitted for very large dataset, and gives similar results than PCA. Will be usefull for future improvements of Granatum."
+        },
+        {
+          "name": "FactorAnalysis",
+           "description": "Factor Analysis (FA) algorithm. An alternative to PCA."
+        },
+        {
+          "name": "FastICA",
+           "description": "Independent Component Analysis (ICA)."
+        },
+        {
+          "name": "NMF",
+           "description": "Non-negative Matrix factorization (NMF)."
+        },
+        {
+          "name": "TSNE",
+           "description": "t-distributed Stochastic Neighbor Embedding (TSNE). TSNE is a tool to visualize the data and is widley used to visualize single-cell subpopulations. It is highly recommended to use another dimension reduction algorithms to reduce first the dimension of the data prior to TNSE."
+        },
+        {
+          "name": "MDS",
+           "description": "Multi-dimensional scaling."
+        },
+        {
+          "name": "ISOMAP",
+           "description": "Non-linear dimensionality reduction through Isometric Mapping (ISOMAP). ISOMAP is an earlisest approach of non-linear embedding algorithm."
+        }
+      ]
+    },
+    {
+      "type": "number",
+      "default": 2,
+      "name": "nClusters",
+      "label": "Number of clusters",
+       "description": "Number of input clusters (K) (ignored if the option `Find the best number of cluster` is set to True)"
+    },
+    {
+      "type": "number",
+      "default": 30,
+      "name": "nComponents",
+      "label": "Number of components",
+       "description": "Defines the number of dimensions used to project the data prior to clustering and visualisation."
+    },
+    {
+      "type": "checkbox",
+      "default": false,
+      "name": "findBestNumberOfCluster",
+      "label": "Find the best number of cluster",
+       "description": "If true, the package will attempt to find automatically thr best number of clusters, using the Silhouette score or the BIC score, depending of the algorithms. An iteration will be perfomed between K=2 and K=30, slowering the analysis."
+    }
+  ],
+  "results": [
+    {
+      "type": "iframe",
+      "width": 850,
+      "height": 650,
+      "name": "plotFigureHtml",
+       "description": "results of the plotting in HTML"
+    },
+    {
+      "type": "text",
+      "label": "Number of clusters",
+      "name": "nClusters",
+       "description": "Number of clusters founds"
+    }
+  ]
+}

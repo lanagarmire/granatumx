@@ -1,0 +1,70 @@
+id: ScanpyPseudotime
+meta:
+  title: Pseudotime construction
+  subtitle: Diffusion Pseudotime analysis (backed by Scanpy)
+  citations:
+    - bibtex: |
+        @article{wolf2018scanpy,
+          title={SCANPY: Large-scale single-cell gene expression data analysis},
+          author={Wolf, F Alexander and Angerer, Philipp and Theis, Fabian J},
+          journal={Genome biology},
+          volume={19},
+          number={1},
+          pages={15},
+          year={2018},
+          publisher={BioMed Central}
+        }
+    - bibtex: |
+        @article{haghverdi2016diffusion,
+          title={Diffusion pseudotime robustly reconstructs lineage branching},
+          author={Haghverdi, Laleh and Buettner, Maren and Wolf, F Alexander and Buettner, Florian and Theis, Fabian J},
+          journal={Nature methods},
+          volume={13},
+          number={10},
+          pages={845},
+          year={2016},
+          publisher={Nature Publishing Group}
+        }
+  description: >
+    The temporal order of differentiating cells is intrinsically encoded in
+    their single-cell expression profiles. We describe an efficient way to
+    robustly estimate this order according to diffusion pseudotime (DPT), which
+    measures transitions between cells using diffusion-like random walks. Our
+    DPT software implementations make it possible to reconstruct the
+    developmental progression of cells and identify transient or metastable
+    states, branching decisions and differentiation endpoints.
+endpoints:
+  backend:
+    cmd: python ./scanpy_pseudotime.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - max: 100
+      min: 1
+      type: number
+      label: Number of neighbors to calculate
+      default: 20
+      injectInto: nNeighborMethod
+    - type: select
+      label: Method for computing connectivities
+      choices:
+        - label: Gauss kernel
+          value: gauss
+          description: 'Gauss kernel following [Coifman05] with adaptive width [Haghverdi16]'
+        - label: Uniform Manifold Approximation and Projection (UMAP)
+          value: umap
+          description: >-
+            McInnes & Healy (2018), UMAP: Uniform Manifold Approximation and
+            Projection for Dimension Reduction
+      default: gauss
+      injectInto: neighborMethod
+  exports:
+    - kind: sampleMeta
+      extractFrom: dpt_order
+    - kind: sampleMeta
+      extractFrom: dpt_groups
+  imports:
+    - kind: assay
+      label: The input assay to use
+      injectInto: assay

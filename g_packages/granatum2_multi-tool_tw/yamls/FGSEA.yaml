@@ -1,0 +1,51 @@
+id: FGSEA
+meta:
+  title: Fast GSEA (R)
+  subtitle: Fast Gene Set Enrichment Analysis implemented in R
+  description: |
+    Gene Set Enrichment Analysis (GSEA) helps identify the biological
+    functions related to a list of genes.
+
+    The [fgsea](https://bioconductor.org/packages/release/bioc/html/fgsea.html)
+    package (authored by Alexey Sergushichev) implements an algorithm for fast
+    gene set enrichment analysis. Using the fast algorithm allows to make more
+    permutations and get more fine grained p-values, which allows to use
+    accurate stantard approaches to multiple hypothesis correction.
+endpoints:
+  backend:
+    cmd: Rscript ./enrichment_xzhu.R
+    type: docker
+    image: granatum2_multi-tool_tw
+frontend:
+  args:
+    - type: select
+      label: The species
+      choices:
+        - label: Mouse
+          value: mouse
+        - label: Human
+          value: human
+      default: human
+      injectInto: species
+    - type: select
+      label: The database for the enrichement analysis
+      choices:
+        - label: Gene Ontology (GO)
+          value: GO
+          description: >
+            Gene Ontology (GO) term enrichment is a technique for interpreting
+            sets of genes making use of the Gene Ontology system of
+            classification, in which genes are assigned to a set of predefined
+            bins depending on their functional characteristics. (From wikipedia)
+        - label: Kyoto Encyclopedia of Genes and Genomes (KEGG)
+          value: KEGG
+          description: >
+            Kyoto Encyclopedia of Genes and Genomes (KEGG) is a collection of
+            databases dealing with genomes, biological pathways, diseases,
+            drugs, and chemical substances. (From wikipedia)
+      default: KEGG
+      injectInto: geneSetDatabase
+  imports:
+    - kind: geneMeta
+      label: A list of genes with their scores
+      injectInto: genesAndScores

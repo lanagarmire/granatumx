@@ -1,0 +1,18 @@
+{
+  "schema": {
+    "file": "schema.graphqls"
+  },
+
+  "endpoints": [
+    {
+      "name": "Default (http://localhost:3000/graphql)",
+      "url": "http://localhost:3000/graphql",
+      "options": {
+        "headers": {
+          "user-agent": "JS GraphQL",
+          "Cookie": "id_token=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJyb2xlIjoibG9nZ2VkX2luX3VzZXIiLCJhdWQiOiJwb3N0Z3JhcGhpbGUiLCJ1c2VyX2lkIjoiNjFiNjRjMTAtYjNiYy0xMWU3LTliMWMtOWY5NzFjZTJiZDhjIiwiaWF0IjoxNTE5MjQ4NjM2LCJleHAiOjE1MzQ4MDA2MzZ9.g7h5zYeUTuIrmqmYdV_wsfU0K2w00SDv7ASuuKXvPKA"
+        }
+      }
+    }
+  ]
+}

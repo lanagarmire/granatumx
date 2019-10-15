@@ -1,0 +1,26 @@
+id: ClusteringQualityMeasure
+meta:
+  title: Clustering Quality Measure
+  subtitle: 'Measures the quality of a clustering with regard to a given "true" clustering'
+  description: |
+    The following two measurements are calculated.
+
+      * [Adjusted Rand Score](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_rand_score.html)
+      * [Adjusted mutual information score](http://scikit-learn.org/stable/modules/generated/sklearn.metrics.adjusted_mutual_info_score.html)
+
+    With both measurements, the larger the value the better, with 1 meaning the
+    predicted clustering has perfect agreement with the provided truth, and 0
+    meaning the clustering is close to random guessing.
+endpoints:
+  backend:
+    cmd: python ./clustering_quality_measure.py
+    type: docker
+    image: granatum/py
+frontend:
+  imports:
+    - kind: sampleMeta
+      label: 'True clusters'
+      injectInto: sample_meta_true
+    - kind: sampleMeta
+      label: 'Predicted clusters'
+      injectInto: sample_meta_predicted

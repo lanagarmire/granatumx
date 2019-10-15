@@ -1,0 +1,15 @@
+[submodule "docker_src/official_py_docker/granatum_clustering"]
+	path = docker_src/official_py_docker/granatum_clustering
+	url = git@gitlab.com:Grouumf/granatum_clustering.git
+[submodule "docker_src/official_py_docker/granatum_deeplearning"]
+	path = docker_src/official_py_docker/granatum_deeplearning
+	url = git@gitlab.com:Grouumf/granatum_deeplearning.git
+[submodule "docker_src/scImpute-gbox"]
+	path = docker_src/scImpute-gbox
+	url = git@gitlab.com:CedricA/scImpute-gbox.git
+[submodule "docker_src/granatum2_multi-tool_tw"]
+	path = docker_src/granatum2_multi-tool_tw
+	url = git@gitlab.com:tomwolf/granatum2_multi-tool_tw.git
+[submodule "docker_src/official_py_docker/scanpy"]
+	path = docker_src/official_py_docker/scanpy
+	url = https://github.com/w9/scanpy

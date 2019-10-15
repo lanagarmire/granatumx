@@ -1,0 +1,55 @@
+id: DifferentialExpression
+meta:
+  title: Differential expression
+  subtitle: Find out genes that are expressed differently between groups
+  description: >
+    Accepts normalized assay and a selected method. Returns table having a row
+    for each feature with statistics indiciating whether or not it is
+    differentially expressed. The differential expression methods are described
+    in Zhu, et al. 2017.
+endpoints:
+  backend:
+    cmd: ./run_de_with_sdk.sh
+    type: docker
+    image: granatum2_multi-tool_tw
+#  dynamic:
+#    cmd: ./run_de_dyn.sh
+#    type: docker
+#    image: granatum2_multi-tool_tw
+frontend:
+  args:
+    - type: select
+      label: DE method
+      choices:
+        - label: NODES (single-cell)
+          value: NODES
+        - label: limma (general)
+          value: limma
+        - label: edgeR (general)
+          value: edgeR
+        - label: SCDE (single cell; very slow)
+          value: SCDE
+      default: NODES
+      injectInto: deMethod
+    - type: number
+      label: Number of compute cores
+      default: 1
+      injectInto: deCores
+    - type: seed
+      label: Random seed
+      default: 12345
+      injectInto: seed
+#  dynamic:
+#    argInjectIntos:
+#      - deMethod
+#    importInjectIntos:
+#      - assay
+#      - groups
+  imports:
+    - kind: assay
+      label: Assay (recommended to use normalized assay only)
+      injectInto: assay
+    - kind: sampleMeta
+      label: Sample groups to compare
+      #injectInto: groups
+      injectInto: sampleMeta

@@ -1,0 +1,1995 @@
+# All input for the `addStep` mutation.
+input AddStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  gboxId: String
+  state: JSON
+  projectId: UUID
+  atStepRank: Int
+}
+
+# The output of our `addStep` mutation.
+type AddStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  addStepReturning: AddStepReturning
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+type AddStepReturning {
+  newStepId: UUID
+}
+
+# An input for mutations affecting `AddStepsGbox`
+input AddStepsGboxInput {
+  gboxId: String
+  state: JSON
+}
+
+# All input for the `addSteps` mutation.
+input AddStepsInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  gboxes: [AddStepsGboxInput]
+  projectId: UUID
+  atStepRank: Int
+}
+
+# The output of our `addSteps` mutation.
+type AddStepsPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `clearErrorsForStep` mutation.
+input ClearErrorsForStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepId: UUID
+}
+
+# The output of our `clearErrorsForStep` mutation.
+type ClearErrorsForStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `clearStepsInProject` mutation.
+input ClearStepsInProjectInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  projectId: UUID
+}
+
+# The output of our `clearStepsInProject` mutation.
+type ClearStepsInProjectPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `createProject` mutation.
+input CreateProjectInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  name: String
+  description: String
+}
+
+# The output of our `createProject` mutation.
+type CreateProjectPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  createProjectReturning: CreateProjectReturning
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+type CreateProjectReturning {
+  id: UUID
+  rank: Int
+}
+
+# All input for the `createSandbox` mutation.
+input CreateSandboxInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+}
+
+# The output of our `createSandbox` mutation.
+type CreateSandboxPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+  userAccount: UserAccount
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+
+  # An edge for our `UserAccount`. May be used by Relay 1.
+  userAccountEdge(
+    # The method to use when ordering `UserAccount`.
+    orderBy: [UserAccountsOrderBy!] = [PRIMARY_KEY_ASC]
+  ): UserAccountsEdge
+}
+
+# A location in a connection that can be used for resuming pagination.
+scalar Cursor
+
+# A point in time as described by the [ISO
+# 8601](https://en.wikipedia.org/wiki/ISO_8601) standard. May or may not include a timezone.
+scalar Datetime
+
+# All input for the `deleteProject` mutation.
+input DeleteProjectInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  projectId: UUID
+}
+
+# The output of our `deleteProject` mutation.
+type DeleteProjectPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+type Export implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  stepId: UUID!
+  kind: String
+  name: String
+  meta: JSON
+  extractFrom: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `Step` that is related to this `Export`.
+  stepByStepId: Step
+
+  # Reads and enables pagination through a set of `Import`.
+  importsByExportId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Import`.
+    orderBy: [ImportsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ImportCondition
+  ): ImportsConnection!
+}
+
+# A condition to be used against `Export` object types. All fields are tested for equality and combined with a logical ‘and.’
+input ExportCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `stepId` field.
+  stepId: UUID
+
+  # Checks for equality with the object’s `kind` field.
+  kind: String
+
+  # Checks for equality with the object’s `name` field.
+  name: String
+
+  # Checks for equality with the object’s `meta` field.
+  meta: JSON
+
+  # Checks for equality with the object’s `extractFrom` field.
+  extractFrom: String
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `Export` values.
+type ExportsConnection {
+  # A list of `Export` objects.
+  nodes: [Export]!
+
+  # A list of edges which contains the `Export` and cursor to aid in pagination.
+  edges: [ExportsEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Export` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Export` edge in the connection.
+type ExportsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Export` at the end of the edge.
+  node: Export
+}
+
+# Methods to use when ordering `Export`.
+enum ExportsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  STEP_ID_ASC
+  STEP_ID_DESC
+  KIND_ASC
+  KIND_DESC
+  NAME_ASC
+  NAME_DESC
+  META_ASC
+  META_DESC
+  EXTRACT_FROM_ASC
+  EXTRACT_FROM_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type Gbox implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: String!
+  meta: JSON
+  endpoints: JSON
+  frontend: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads and enables pagination through a set of `RecipeGbox`.
+  recipeGboxesByGboxId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `RecipeGbox`.
+    orderBy: [RecipeGboxesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: RecipeGboxCondition
+  ): RecipeGboxesConnection!
+
+  # Reads and enables pagination through a set of `Step`.
+  stepsByGbox(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Step`.
+    orderBy: [StepsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: StepCondition
+  ): StepsConnection!
+}
+
+# A condition to be used against `Gbox` object types. All fields are tested for equality and combined with a logical ‘and.’
+input GboxCondition {
+  # Checks for equality with the object’s `id` field.
+  id: String
+
+  # Checks for equality with the object’s `meta` field.
+  meta: JSON
+
+  # Checks for equality with the object’s `endpoints` field.
+  endpoints: JSON
+
+  # Checks for equality with the object’s `frontend` field.
+  frontend: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `Gbox` values.
+type GboxesConnection {
+  # A list of `Gbox` objects.
+  nodes: [Gbox]!
+
+  # A list of edges which contains the `Gbox` and cursor to aid in pagination.
+  edges: [GboxesEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Gbox` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Gbox` edge in the connection.
+type GboxesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Gbox` at the end of the edge.
+  node: Gbox
+}
+
+# Methods to use when ordering `Gbox`.
+enum GboxesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  META_ASC
+  META_DESC
+  ENDPOINTS_ASC
+  ENDPOINTS_DESC
+  FRONTEND_ASC
+  FRONTEND_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type Import implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  stepId: UUID!
+  exportId: UUID!
+  injectInto: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `Step` that is related to this `Import`.
+  stepByStepId: Step
+
+  # Reads a single `Export` that is related to this `Import`.
+  exportByExportId: Export
+}
+
+# A condition to be used against `Import` object types. All fields are tested for equality and combined with a logical ‘and.’
+input ImportCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `stepId` field.
+  stepId: UUID
+
+  # Checks for equality with the object’s `exportId` field.
+  exportId: UUID
+
+  # Checks for equality with the object’s `injectInto` field.
+  injectInto: String
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `Import` values.
+type ImportsConnection {
+  # A list of `Import` objects.
+  nodes: [Import]!
+
+  # A list of edges which contains the `Import` and cursor to aid in pagination.
+  edges: [ImportsEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Import` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Import` edge in the connection.
+type ImportsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Import` at the end of the edge.
+  node: Import
+}
+
+# Methods to use when ordering `Import`.
+enum ImportsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  STEP_ID_ASC
+  STEP_ID_DESC
+  EXPORT_ID_ASC
+  EXPORT_ID_DESC
+  INJECT_INTO_ASC
+  INJECT_INTO_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+# All input for the `initiateStep` mutation.
+input InitiateStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  id: UUID
+}
+
+# The output of our `initiateStep` mutation.
+type InitiateStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `interceptStep` mutation.
+input InterceptStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepId: UUID
+}
+
+# The output of our `interceptStep` mutation.
+type InterceptStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# A JavaScript object encoded in the JSON format as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
+scalar JSON
+
+# All input for the `markDoneStep` mutation.
+input MarkDoneStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  id: UUID
+}
+
+# The output of our `markDoneStep` mutation.
+type MarkDoneStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# The root mutation type which contains root level fields which mutate data.
+type Mutation {
+  addStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: AddStepInput!
+  ): AddStepPayload
+  addSteps(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: AddStepsInput!
+  ): AddStepsPayload
+  clearErrorsForStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: ClearErrorsForStepInput!
+  ): ClearErrorsForStepPayload
+  clearStepsInProject(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: ClearStepsInProjectInput!
+  ): ClearStepsInProjectPayload
+  createProject(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: CreateProjectInput!
+  ): CreateProjectPayload
+  createSandbox(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: CreateSandboxInput!
+  ): CreateSandboxPayload
+  deleteProject(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: DeleteProjectInput!
+  ): DeleteProjectPayload
+  initiateStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: InitiateStepInput!
+  ): InitiateStepPayload
+  interceptStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: InterceptStepInput!
+  ): InterceptStepPayload
+  markDoneStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: MarkDoneStepInput!
+  ): MarkDoneStepPayload
+  noop(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: NoopInput!
+  ): NoopPayload
+  removeStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: RemoveStepInput!
+  ): RemoveStepPayload
+  removeSteps(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: RemoveStepsInput!
+  ): RemoveStepsPayload
+  reorderStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: ReorderStepInput!
+  ): ReorderStepPayload
+  resetStep(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: ResetStepInput!
+  ): ResetStepPayload
+  resetStepRecursively(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: ResetStepRecursivelyInput!
+  ): ResetStepRecursivelyPayload
+  saveCurrentPipelineAsRecipe(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: SaveCurrentPipelineAsRecipeInput!
+  ): SaveCurrentPipelineAsRecipePayload
+  updateProjectState(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: UpdateProjectStateInput!
+  ): UpdateProjectStatePayload
+  updateWhoamiState(
+    # The exclusive input argument for this mutation. An object type, make sure to see documentation for this object’s fields.
+    input: UpdateWhoamiStateInput!
+  ): UpdateWhoamiStatePayload
+}
+
+# An object with a globally unique `ID`.
+interface Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+}
+
+# All input for the `noop` mutation.
+input NoopInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+}
+
+# The output of our `noop` mutation.
+type NoopPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# Information about pagination in a connection.
+type PageInfo {
+  # When paginating forwards, are there more items?
+  hasNextPage: Boolean!
+
+  # When paginating backwards, are there more items?
+  hasPreviousPage: Boolean!
+
+  # When paginating backwards, the cursor to continue.
+  startCursor: Cursor
+
+  # When paginating forwards, the cursor to continue.
+  endCursor: Cursor
+}
+
+type Project implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  ownerId: UUID!
+  rank: Int!
+  name: String!
+  description: String!
+  state: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `UserAccount` that is related to this `Project`.
+  userAccountByOwnerId: UserAccount
+
+  # Reads and enables pagination through a set of `Step`.
+  stepsByProjectId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Step`.
+    orderBy: [StepsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: StepCondition
+  ): StepsConnection!
+}
+
+# A condition to be used against `Project` object types. All fields are tested for equality and combined with a logical ‘and.’
+input ProjectCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `ownerId` field.
+  ownerId: UUID
+
+  # Checks for equality with the object’s `rank` field.
+  rank: Int
+
+  # Checks for equality with the object’s `name` field.
+  name: String
+
+  # Checks for equality with the object’s `description` field.
+  description: String
+
+  # Checks for equality with the object’s `state` field.
+  state: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `Project` values.
+type ProjectsConnection {
+  # A list of `Project` objects.
+  nodes: [Project]!
+
+  # A list of edges which contains the `Project` and cursor to aid in pagination.
+  edges: [ProjectsEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Project` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Project` edge in the connection.
+type ProjectsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Project` at the end of the edge.
+  node: Project
+}
+
+# Methods to use when ordering `Project`.
+enum ProjectsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  OWNER_ID_ASC
+  OWNER_ID_DESC
+  RANK_ASC
+  RANK_DESC
+  NAME_ASC
+  NAME_DESC
+  DESCRIPTION_ASC
+  DESCRIPTION_DESC
+  STATE_ASC
+  STATE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+# The root query type which gives access points into the data universe.
+type Query implements Node {
+  # Exposes the root query type nested one level down. This is helpful for Relay 1
+  # which can only query top level fields if they are in a particular form.
+  query: Query!
+
+  # The root query type must be a `Node` to work well with Relay 1 mutations. This just resolves to `query`.
+  nodeId: ID!
+
+  # Fetches an object given its globally unique `ID`.
+  node(
+    # The globally unique `ID`.
+    nodeId: ID!
+  ): Node
+
+  # Reads and enables pagination through a set of `Export`.
+  allExports(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Export`.
+    orderBy: [ExportsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ExportCondition
+  ): ExportsConnection
+
+  # Reads and enables pagination through a set of `Gbox`.
+  allGboxes(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Gbox`.
+    orderBy: [GboxesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: GboxCondition
+  ): GboxesConnection
+
+  # Reads and enables pagination through a set of `Import`.
+  allImports(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Import`.
+    orderBy: [ImportsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ImportCondition
+  ): ImportsConnection
+
+  # Reads and enables pagination through a set of `Project`.
+  allProjects(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Project`.
+    orderBy: [ProjectsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ProjectCondition
+  ): ProjectsConnection
+
+  # Reads and enables pagination through a set of `Recipe`.
+  allRecipes(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Recipe`.
+    orderBy: [RecipesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: RecipeCondition
+  ): RecipesConnection
+
+  # Reads and enables pagination through a set of `RecipeGbox`.
+  allRecipeGboxes(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `RecipeGbox`.
+    orderBy: [RecipeGboxesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: RecipeGboxCondition
+  ): RecipeGboxesConnection
+
+  # Reads and enables pagination through a set of `Step`.
+  allSteps(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Step`.
+    orderBy: [StepsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: StepCondition
+  ): StepsConnection
+
+  # Reads and enables pagination through a set of `UploadedFile`.
+  allUploadedFiles(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `UploadedFile`.
+    orderBy: [UploadedFilesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: UploadedFileCondition
+  ): UploadedFilesConnection
+
+  # Reads and enables pagination through a set of `UserAccount`.
+  allUserAccounts(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `UserAccount`.
+    orderBy: [UserAccountsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: UserAccountCondition
+  ): UserAccountsConnection
+
+  # Reads and enables pagination through a set of `UserProfile`.
+  allUserProfiles(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `UserProfile`.
+    orderBy: [UserProfilesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: UserProfileCondition
+  ): UserProfilesConnection
+  exportById(id: UUID!): Export
+  exportByStepIdAndKindAndName(stepId: UUID!, kind: String!, name: String!): Export
+  gboxById(id: String!): Gbox
+  importById(id: UUID!): Import
+  projectById(id: UUID!): Project
+  recipeById(id: UUID!): Recipe
+  recipeGboxById(id: UUID!): RecipeGbox
+  stepById(id: UUID!): Step
+  uploadedFileById(id: UUID!): UploadedFile
+  userAccountById(id: UUID!): UserAccount
+  userProfileByUserId(userId: UUID!): UserProfile
+
+  # Reads and enables pagination through a set of `UserAccount`.
+  debugAllUserAccounts(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+  ): UserAccountsConnection!
+
+  # Reads and enables pagination through a set of `Step`.
+  getStepDeps(
+    id: UUID
+
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+  ): StepsConnection!
+
+  # Reads and enables pagination through a set of `Step`.
+  getStepRevDeps(
+    id: UUID
+
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+  ): StepsConnection!
+  whoami: UserAccount
+
+  # Reads a single `Export` using its globally unique `ID`.
+  export(
+    # The globally unique `ID` to be used in selecting a single `Export`.
+    nodeId: ID!
+  ): Export
+
+  # Reads a single `Gbox` using its globally unique `ID`.
+  gbox(
+    # The globally unique `ID` to be used in selecting a single `Gbox`.
+    nodeId: ID!
+  ): Gbox
+
+  # Reads a single `Import` using its globally unique `ID`.
+  import(
+    # The globally unique `ID` to be used in selecting a single `Import`.
+    nodeId: ID!
+  ): Import
+
+  # Reads a single `Project` using its globally unique `ID`.
+  project(
+    # The globally unique `ID` to be used in selecting a single `Project`.
+    nodeId: ID!
+  ): Project
+
+  # Reads a single `Recipe` using its globally unique `ID`.
+  recipe(
+    # The globally unique `ID` to be used in selecting a single `Recipe`.
+    nodeId: ID!
+  ): Recipe
+
+  # Reads a single `RecipeGbox` using its globally unique `ID`.
+  recipeGbox(
+    # The globally unique `ID` to be used in selecting a single `RecipeGbox`.
+    nodeId: ID!
+  ): RecipeGbox
+
+  # Reads a single `Step` using its globally unique `ID`.
+  step(
+    # The globally unique `ID` to be used in selecting a single `Step`.
+    nodeId: ID!
+  ): Step
+
+  # Reads a single `UploadedFile` using its globally unique `ID`.
+  uploadedFile(
+    # The globally unique `ID` to be used in selecting a single `UploadedFile`.
+    nodeId: ID!
+  ): UploadedFile
+
+  # Reads a single `UserAccount` using its globally unique `ID`.
+  userAccount(
+    # The globally unique `ID` to be used in selecting a single `UserAccount`.
+    nodeId: ID!
+  ): UserAccount
+
+  # Reads a single `UserProfile` using its globally unique `ID`.
+  userProfile(
+    # The globally unique `ID` to be used in selecting a single `UserProfile`.
+    nodeId: ID!
+  ): UserProfile
+}
+
+type Recipe implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  meta: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads and enables pagination through a set of `RecipeGbox`.
+  recipeGboxesByRecipeId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `RecipeGbox`.
+    orderBy: [RecipeGboxesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: RecipeGboxCondition
+  ): RecipeGboxesConnection!
+}
+
+# A condition to be used against `Recipe` object types. All fields are tested for equality and combined with a logical ‘and.’
+input RecipeCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `meta` field.
+  meta: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+type RecipeGbox implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  recipeId: UUID!
+  gboxId: String!
+  rank: Int!
+  initialState: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `Recipe` that is related to this `RecipeGbox`.
+  recipeByRecipeId: Recipe
+
+  # Reads a single `Gbox` that is related to this `RecipeGbox`.
+  gboxByGboxId: Gbox
+}
+
+# A condition to be used against `RecipeGbox` object types. All fields are tested
+# for equality and combined with a logical ‘and.’
+input RecipeGboxCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `recipeId` field.
+  recipeId: UUID
+
+  # Checks for equality with the object’s `gboxId` field.
+  gboxId: String
+
+  # Checks for equality with the object’s `rank` field.
+  rank: Int
+
+  # Checks for equality with the object’s `initialState` field.
+  initialState: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `RecipeGbox` values.
+type RecipeGboxesConnection {
+  # A list of `RecipeGbox` objects.
+  nodes: [RecipeGbox]!
+
+  # A list of edges which contains the `RecipeGbox` and cursor to aid in pagination.
+  edges: [RecipeGboxesEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `RecipeGbox` you could get from the connection.
+  totalCount: Int
+}
+
+# A `RecipeGbox` edge in the connection.
+type RecipeGboxesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `RecipeGbox` at the end of the edge.
+  node: RecipeGbox
+}
+
+# Methods to use when ordering `RecipeGbox`.
+enum RecipeGboxesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  RECIPE_ID_ASC
+  RECIPE_ID_DESC
+  GBOX_ID_ASC
+  GBOX_ID_DESC
+  RANK_ASC
+  RANK_DESC
+  INITIAL_STATE_ASC
+  INITIAL_STATE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+# A connection to a list of `Recipe` values.
+type RecipesConnection {
+  # A list of `Recipe` objects.
+  nodes: [Recipe]!
+
+  # A list of edges which contains the `Recipe` and cursor to aid in pagination.
+  edges: [RecipesEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Recipe` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Recipe` edge in the connection.
+type RecipesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Recipe` at the end of the edge.
+  node: Recipe
+}
+
+# Methods to use when ordering `Recipe`.
+enum RecipesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  META_ASC
+  META_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+# All input for the `removeStep` mutation.
+input RemoveStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepId: UUID
+}
+
+# The output of our `removeStep` mutation.
+type RemoveStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `removeSteps` mutation.
+input RemoveStepsInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepIds: [UUID]
+}
+
+# The output of our `removeSteps` mutation.
+type RemoveStepsPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `reorderStep` mutation.
+input ReorderStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  id: UUID
+  toRank: Int
+}
+
+# The output of our `reorderStep` mutation.
+type ReorderStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `resetStep` mutation.
+input ResetStepInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepId: UUID
+}
+
+# The output of our `resetStep` mutation.
+type ResetStepPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `resetStepRecursively` mutation.
+input ResetStepRecursivelyInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  stepId: UUID
+}
+
+# The output of our `resetStepRecursively` mutation.
+type ResetStepRecursivelyPayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# An input for mutations affecting `SaveCurrentPipelineAsRecipeGbox`
+input SaveCurrentPipelineAsRecipeGboxInput {
+  gboxId: String
+  rank: Int
+  initialState: JSON
+}
+
+# All input for the `saveCurrentPipelineAsRecipe` mutation.
+input SaveCurrentPipelineAsRecipeInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  meta: JSON
+  gboxes: [SaveCurrentPipelineAsRecipeGboxInput]
+}
+
+# The output of our `saveCurrentPipelineAsRecipe` mutation.
+type SaveCurrentPipelineAsRecipePayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+type Step implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  projectId: UUID!
+  status: StepStatus!
+  rank: Int!
+  gbox: String!
+  args: JSON
+  results: JSON
+  errors: JSON
+  state: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `Project` that is related to this `Step`.
+  projectByProjectId: Project
+
+  # Reads a single `Gbox` that is related to this `Step`.
+  gboxByGbox: Gbox
+
+  # Reads and enables pagination through a set of `Export`.
+  exportsByStepId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Export`.
+    orderBy: [ExportsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ExportCondition
+  ): ExportsConnection!
+
+  # Reads and enables pagination through a set of `Import`.
+  importsByStepId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Import`.
+    orderBy: [ImportsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ImportCondition
+  ): ImportsConnection!
+
+  # Reads and enables pagination through a set of `UploadedFile`.
+  uploadedFilesByStepId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `UploadedFile`.
+    orderBy: [UploadedFilesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: UploadedFileCondition
+  ): UploadedFilesConnection!
+}
+
+# A condition to be used against `Step` object types. All fields are tested for equality and combined with a logical ‘and.’
+input StepCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `projectId` field.
+  projectId: UUID
+
+  # Checks for equality with the object’s `status` field.
+  status: StepStatus
+
+  # Checks for equality with the object’s `rank` field.
+  rank: Int
+
+  # Checks for equality with the object’s `gbox` field.
+  gbox: String
+
+  # Checks for equality with the object’s `args` field.
+  args: JSON
+
+  # Checks for equality with the object’s `results` field.
+  results: JSON
+
+  # Checks for equality with the object’s `errors` field.
+  errors: JSON
+
+  # Checks for equality with the object’s `state` field.
+  state: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `Step` values.
+type StepsConnection {
+  # A list of `Step` objects.
+  nodes: [Step]!
+
+  # A list of edges which contains the `Step` and cursor to aid in pagination.
+  edges: [StepsEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `Step` you could get from the connection.
+  totalCount: Int
+}
+
+# A `Step` edge in the connection.
+type StepsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `Step` at the end of the edge.
+  node: Step
+}
+
+# Methods to use when ordering `Step`.
+enum StepsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  PROJECT_ID_ASC
+  PROJECT_ID_DESC
+  STATUS_ASC
+  STATUS_DESC
+  RANK_ASC
+  RANK_DESC
+  GBOX_ASC
+  GBOX_DESC
+  ARGS_ASC
+  ARGS_DESC
+  RESULTS_ASC
+  RESULTS_DESC
+  ERRORS_ASC
+  ERRORS_DESC
+  STATE_ASC
+  STATE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+enum StepStatus {
+  IDLE
+  INITIATED
+  RUNNING
+  INTERCEPTION_REQUESTED
+  DONE
+  QUERIED
+  PROCESSING
+}
+
+# All input for the `updateProjectState` mutation.
+input UpdateProjectStateInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  projectId: UUID
+  newState: JSON
+}
+
+# The output of our `updateProjectState` mutation.
+type UpdateProjectStatePayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+# All input for the `updateWhoamiState` mutation.
+input UpdateWhoamiStateInput {
+  # An arbitrary string value with no semantic meaning. Will be included in the
+  # payload verbatim. May be used to track mutations by the client.
+  clientMutationId: String
+  newState: JSON
+}
+
+# The output of our `updateWhoamiState` mutation.
+type UpdateWhoamiStatePayload {
+  # The exact same `clientMutationId` that was provided in the mutation input,
+  # unchanged and unused. May be used by a client to track mutations.
+  clientMutationId: String
+
+  # Our root query field type. Allows us to run any query from our mutation payload.
+  query: Query
+}
+
+type UploadedFile implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  stepId: UUID!
+  injectInto: String
+  meta: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `Step` that is related to this `UploadedFile`.
+  stepByStepId: Step
+}
+
+# A condition to be used against `UploadedFile` object types. All fields are
+# tested for equality and combined with a logical ‘and.’
+input UploadedFileCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `stepId` field.
+  stepId: UUID
+
+  # Checks for equality with the object’s `injectInto` field.
+  injectInto: String
+
+  # Checks for equality with the object’s `meta` field.
+  meta: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `UploadedFile` values.
+type UploadedFilesConnection {
+  # A list of `UploadedFile` objects.
+  nodes: [UploadedFile]!
+
+  # A list of edges which contains the `UploadedFile` and cursor to aid in pagination.
+  edges: [UploadedFilesEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `UploadedFile` you could get from the connection.
+  totalCount: Int
+}
+
+# A `UploadedFile` edge in the connection.
+type UploadedFilesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `UploadedFile` at the end of the edge.
+  node: UploadedFile
+}
+
+# Methods to use when ordering `UploadedFile`.
+enum UploadedFilesOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  STEP_ID_ASC
+  STEP_ID_DESC
+  INJECT_INTO_ASC
+  INJECT_INTO_DESC
+  META_ASC
+  META_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type UserAccount implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  id: UUID!
+  email: String!
+  emailConfirmed: Boolean
+  state: JSON
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `UserProfile` that is related to this `UserAccount`.
+  userProfileByUserId: UserProfile
+
+  # Reads and enables pagination through a set of `UserProfile`.
+  userProfilesByUserId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `UserProfile`.
+    orderBy: [UserProfilesOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: UserProfileCondition
+  ): UserProfilesConnection! @deprecated(reason: "Please use userProfileByUserId instead")
+
+  # Reads and enables pagination through a set of `Project`.
+  projectsByOwnerId(
+    # Only read the first `n` values of the set.
+    first: Int
+
+    # Only read the last `n` values of the set.
+    last: Int
+
+    # Skip the first `n` values from our `after` cursor, an alternative to cursor
+    # based pagination. May not be used with `last`.
+    offset: Int
+
+    # Read all values in the set before (above) this cursor.
+    before: Cursor
+
+    # Read all values in the set after (below) this cursor.
+    after: Cursor
+
+    # The method to use when ordering `Project`.
+    orderBy: [ProjectsOrderBy!] = [PRIMARY_KEY_ASC]
+
+    # A condition to be used in determining which values should be returned by the collection.
+    condition: ProjectCondition
+  ): ProjectsConnection!
+  profile: UserProfile
+}
+
+# A condition to be used against `UserAccount` object types. All fields are tested
+# for equality and combined with a logical ‘and.’
+input UserAccountCondition {
+  # Checks for equality with the object’s `id` field.
+  id: UUID
+
+  # Checks for equality with the object’s `email` field.
+  email: String
+
+  # Checks for equality with the object’s `emailConfirmed` field.
+  emailConfirmed: Boolean
+
+  # Checks for equality with the object’s `state` field.
+  state: JSON
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `UserAccount` values.
+type UserAccountsConnection {
+  # A list of `UserAccount` objects.
+  nodes: [UserAccount]!
+
+  # A list of edges which contains the `UserAccount` and cursor to aid in pagination.
+  edges: [UserAccountsEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `UserAccount` you could get from the connection.
+  totalCount: Int
+}
+
+# A `UserAccount` edge in the connection.
+type UserAccountsEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `UserAccount` at the end of the edge.
+  node: UserAccount
+}
+
+# Methods to use when ordering `UserAccount`.
+enum UserAccountsOrderBy {
+  NATURAL
+  ID_ASC
+  ID_DESC
+  EMAIL_ASC
+  EMAIL_DESC
+  EMAIL_CONFIRMED_ASC
+  EMAIL_CONFIRMED_DESC
+  STATE_ASC
+  STATE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+type UserProfile implements Node {
+  # A globally unique identifier. Can be used in various places throughout the system to identify this single value.
+  nodeId: ID!
+  userId: UUID!
+  displayName: String
+  gender: String
+  institution: String
+  picture: String
+  createdAt: Datetime!
+  updatedAt: Datetime!
+
+  # Reads a single `UserAccount` that is related to this `UserProfile`.
+  userAccountByUserId: UserAccount
+}
+
+# A condition to be used against `UserProfile` object types. All fields are tested
+# for equality and combined with a logical ‘and.’
+input UserProfileCondition {
+  # Checks for equality with the object’s `userId` field.
+  userId: UUID
+
+  # Checks for equality with the object’s `displayName` field.
+  displayName: String
+
+  # Checks for equality with the object’s `gender` field.
+  gender: String
+
+  # Checks for equality with the object’s `institution` field.
+  institution: String
+
+  # Checks for equality with the object’s `picture` field.
+  picture: String
+
+  # Checks for equality with the object’s `createdAt` field.
+  createdAt: Datetime
+
+  # Checks for equality with the object’s `updatedAt` field.
+  updatedAt: Datetime
+}
+
+# A connection to a list of `UserProfile` values.
+type UserProfilesConnection {
+  # A list of `UserProfile` objects.
+  nodes: [UserProfile]!
+
+  # A list of edges which contains the `UserProfile` and cursor to aid in pagination.
+  edges: [UserProfilesEdge!]!
+
+  # Information to aid in pagination.
+  pageInfo: PageInfo!
+
+  # The count of *all* `UserProfile` you could get from the connection.
+  totalCount: Int
+}
+
+# A `UserProfile` edge in the connection.
+type UserProfilesEdge {
+  # A cursor for use in pagination.
+  cursor: Cursor
+
+  # The `UserProfile` at the end of the edge.
+  node: UserProfile
+}
+
+# Methods to use when ordering `UserProfile`.
+enum UserProfilesOrderBy {
+  NATURAL
+  USER_ID_ASC
+  USER_ID_DESC
+  DISPLAY_NAME_ASC
+  DISPLAY_NAME_DESC
+  GENDER_ASC
+  GENDER_DESC
+  INSTITUTION_ASC
+  INSTITUTION_DESC
+  PICTURE_ASC
+  PICTURE_DESC
+  CREATED_AT_ASC
+  CREATED_AT_DESC
+  UPDATED_AT_ASC
+  UPDATED_AT_DESC
+  PRIMARY_KEY_ASC
+  PRIMARY_KEY_DESC
+}
+
+# A universally unique identifier as defined by [RFC 4122](https://tools.ietf.org/html/rfc4122).
+scalar UUID
+

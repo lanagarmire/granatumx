@@ -1,0 +1,49 @@
+id: LogTransformation
+meta:
+  title: Log transformation
+  subtitle: Take a log on all values with an optional pseudo-count
+  description: >
+    Transformation is `y = log(x + a)`. With `a = 1` by default. The default
+
+    base is 2.
+
+
+    Without log-transformation, the expression levels follow (approximately) a
+
+    [negative binomial
+    distribution](https://en.wikipedia.org/wiki/Negative_binomial_distribution),
+
+    which is usually skewed heavily towards the low values. This skewedness
+
+    might affect some of the statistical analysis including clustering and
+
+    differential expression analysis, which typically assume a [normal
+    distribution](https://en.wikipedia.org/wiki/Normal_distribution).
+endpoints:
+  backend:
+    cmd: python ./log_transformation.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - max: 100
+      min: 0
+      type: number
+      label: The base used for the log function
+      default: 2
+      injectInto: logBase
+    - max: 10000
+      min: 0
+      type: number
+      label: >-
+        The pseudo counts added before log transformation (to avoid getting
+        log(0))
+      default: 1
+      injectInto: pseudoCounts
+  exports:
+    - kind: assay
+      extractFrom: Log transformed assay
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay

@@ -1,0 +1,54 @@
+meta:
+  gbox: "Gene_filtering"
+  title: "Gene filtering"
+  maintainer:
+    name: "Thomas K. Wolfgruber"
+    email: "twolfgruber@cc.hawaii.edu"
+  citation:
+    bibtex: >
+     '@article{Zhu2017,doi = {10.1186/s13073-017-0492-3},url =
+     {https://doi.org/10.1186/s13073-017-0492-3},year  = {2017},month =
+     {dec},publisher = {Springer Nature},volume = {9},number = {1},author = {Xun Zhu
+     and Thomas K. Wolfgruber and Austin Tasato and C{\''{e}}dric Arisdakessian and
+     David G. Garmire and Lana X. Garmire},title = {Granatum: a graphical
+     single-cell {RNA}-Seq analysis pipeline for genomics scientists},journal =
+     {Genome Medicine}}'
+  description: >
+    "Accepts assay matrix and geneIds, as well as expression intensity and
+    disperson filtering criteria. Returns a plot of gene values and what genes are selected
+    after filtering, as well as the matrix and geneIds after filtering. The gene filtering
+    method usese the monocle package as described in Zhu, et al. 2017."
+endpoints:
+  backend:
+    type: "docker"
+    image: "granatum2_multi-tool_tw"
+    cmd: "Rscript ./filter_genes.R"
+frontend:
+  imports:
+  - kind: "assay"
+    name: "assay"
+    label: "Assay including matrix and geneIds"
+  exports:
+  - kind: "assay"
+    extractFrom: "geneFilteredAssay"
+    default: "Assay after gene filtering"
+    label: "Assay after gene filtering"
+  args:
+  - type: "number"
+    name: "expressionThreshold"
+    label: "Minimum expression (log mean) threshold"
+    default: -2.3
+    step: 0.01
+    min: -4
+    max: 3
+  - type: "number"
+    name: "dispersionThreshold"
+    label: "Minimum dispersion threshold"
+    default: 1
+    step: 0.1
+    min: 0
+    max: 5
+  - type: "number"
+    name: "seed"
+    label: "Random seed"
+    default: 96813

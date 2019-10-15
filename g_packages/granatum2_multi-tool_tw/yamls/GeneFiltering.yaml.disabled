@@ -1,0 +1,90 @@
+id: GeneFiltering
+meta:
+  title: "Gene filtering"
+  subtitle: "Filter genes based on their average expression level and dispersion"
+  citation:
+    bibtex: >
+      @article{trapnell2014dynamics,
+        title={
+          The dynamics and regulators of cell fate decisions are revealed by pseudotemporal
+          ordering of single cells
+        },
+        author={
+          Trapnell, Cole and Cacchiarelli, Davide and Grimsby, Jonna and Pokharel, Prapti and Li,
+          Shuqiang and Morse, Michael and Lennon, Niall J and Livak, Kenneth J and Mikkelsen,
+          Tarjei S and Rinn, John L
+        },
+        journal={Nature biotechnology},
+        volume={32},
+        number={4},
+        pages={381},
+        year={2014},
+        publisher={Nature Publishing Group}
+      }
+  description: >
+    Accepts assay matrix and geneIds, as well as expression intensity and disperson filtering criteria.
+    Returns a plot of gene values and what genes are selected after filtering, as well as the matrix and
+    geneIds after filtering. The gene filtering method uses the monocle package as described in Zhu, et al. 2017.
+endpoints:
+  backend:
+    type: "docker"
+    image: "granatum2_multi-tool_tw"
+    cmd: "./run_filter_genes.sh"
+frontend:
+  imports:
+    -
+      kind: "assay"
+      injectInto: "assay"
+      label: "Assay including matrix and geneIds"
+  args:
+    -
+      type: "number"
+      injectInto: "expressionThreshold"
+      label: "Minimum expression (log mean) threshold"
+      default: -2.3
+      step: 0.01
+      min: -4
+      max: 3
+    -
+      type: "number"
+      injectInto: "dispersionThreshold"
+      label: "Minimum dispersion threshold"
+      default: 1
+      step: 0.1
+      min: 0
+      max: 5
+    -
+      type: "seed"
+      injectInto: "seed"
+      label: "Random seed"
+      default: 96813
+  exports:
+    -
+      kind: "geneList"
+      extractFrom: "geneIds_filtered"
+      default: "Selected Genes"
+      label: "Selected Genes"
+    -
+      kind: "assay"
+      extractFrom: "matrix_filtered"
+      default: "Gene-filtered assay"
+      label: "Gene-filtered assay"
+  results:
+    -
+      type: "png"
+      label: "Gene filtering plot"
+      width: 750
+      height: 500
+      extractFrom: "gene_filtering_plot"
+      description: "Plot of genes by their expression and dispersion levels. Only genes colored black in the plot will be kept."
+    -
+      type: "table"
+      label: "Numbers of genes"
+      extractFrom: "numbers_of_genes"
+      description: "Numbers of genes before and after filtering"
+      cols:
+        -
+          name: "Before"
+        -
+          name: "After"
+

@@ -1,0 +1,105 @@
+id: pred_lung_cancer_risk_on_20_lncRNAs
+meta:
+  title: Predict lung cancer on 20 lncRNAs
+  subtitle: >-
+    [... plz add details ...] Predict lung cancer on 20 lncRNAs
+  maintainer:
+    name: Tianying Zhao
+    email: tianying@hawaii.edu
+  description: |
+    [... plz add details ...] Provide brief introduction. State the purpose of his
+    module, and why it is useful. Briefly explain what the user is filling in.
+    Provide references and/or links.
+
+    ![](https://lungcanceralliance.org/wp-content/uploads/2017/10/FightingBack.gif)
+endpoints:
+  backend:
+    cmd: "Rscript ./predict_lung_cancer_risk_from_20_lncRNA.R"
+    type: docker
+    image: granatum/lncrna
+frontend:
+  args:
+    - type: number
+      label: Number of trees
+      default: 400
+      injectInto: n_trees
+    - type: number
+      label: TMPO.AS1.202
+      default: 0
+      injectInto: TMPO.AS1.202
+    - type: number
+      label: SBF2.AS1.201
+      default: 0
+      injectInto: SBF2.AS1.201
+    - type: number
+      label: MAFG.AS1.201
+      default: 0
+      injectInto: MAFG.AS1.201
+    - type: number
+      label: LINC01852.201
+      default: 0
+      injectInto: LINC01852.201
+    - type: number
+      label: LINC01614.201
+      default: 0
+      injectInto: LINC01614.201
+    - type: number
+      label: LINC00261.202
+      default: 0
+      injectInto: LINC00261.202
+    - type: number
+      label: HHIP.AS1.203
+      default: 0
+      injectInto: HHIP.AS1.203
+    - type: number
+      label: HHIP.AS1.201
+      default: 0
+      injectInto: HHIP.AS1.201
+    - type: number
+      label: CARD8.AS1.201
+      default: 0
+      injectInto: CARD8.AS1.201
+    - type: number
+      label: AL109741.1.201
+      default: 0
+      injectInto: AL109741.1.201
+    - type: number
+      label: AC146944.4.201
+      default: 0
+      injectInto: AC146944.4.201
+    - type: number
+      label: AC027288.3.203
+      default: 0
+      injectInto: AC027288.3.203
+    - type: number
+      label: LINC02555.201
+      default: 0
+      injectInto: LINC02555.201
+    - type: number
+      label: LINC01936.201
+      default: 0
+      injectInto: LINC01936.201
+    - type: number
+      label: TBX5.AS1.201
+      default: 0
+      injectInto: TBX5.AS1.201
+    - type: number
+      label: HSPC324.201
+      default: 0
+      injectInto: HSPC324.201
+    - type: number
+      label: GATA6.AS1.202
+      default: 0
+      injectInto: GATA6.AS1.202
+    - type: number
+      label: AP000866.2.201
+      default: 0
+      injectInto: AP000866.2.201
+    - type: number
+      label: ADAMTS9.AS2.203
+      default: 0
+      injectInto: ADAMTS9.AS2.203
+    - type: number
+      label: AC008268.1.201
+      default: 0
+      injectInto: AC008268.1.201

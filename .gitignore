@@ -1,0 +1,8 @@
+node_modules/
+yarn-error.log
+coverage/
+.vscode/
+ignore/
+.idea/
+.ipynb_checkpoints/
+nohup.out

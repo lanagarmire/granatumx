@@ -1,0 +1,4 @@
+theano
+keras
+granatum_clustering
+scikit-learn>=0.19

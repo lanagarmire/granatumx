@@ -1,0 +1,56 @@
+# To check that this file is correctly formatted run the following:
+# ruby -e "require 'yaml';puts YAML.load_file('./Enrichment.yaml')"
+meta:
+  box: Enrichment
+  title: KEGG/GO enrichment analysis
+  maintainer:
+    name: Thomas K. Wolfgruber
+    email: twolfgruber@cc.hawaii.edu
+  citation:
+    bibtex: > # Folded into one line, vs. |, which would preserve newlines
+      "@article{Zhu2017,doi = {10.1186/s13073-017-0492-3},url = {https://doi.org/10.1186/s13073-017-0492-3},
+      year = {2017},month = {dec},publisher = {Springer Nature},volume = {9},number = {1},author
+      = {Xun Zhu and Thomas K. Wolfgruber and Austin Tasato and C{\\'{e}}dric Arisdakessian
+      and David G. Garmire and Lana X. Garmire},title = {Granatum: a graphical single-cell
+      {RNA}-Seq analysis pipeline for genomics scientists},journal = {Genome Medicine}}"
+  description: Accepts differential expression table and a selected method. Returns plot as well as a
+    table having a row for each KEGG pathway or GO term and enrichment score.
+endpoints: 
+  # Note: backend uses JSON input and outputs to JSON
+  backend: docker run -i --rm granatum2_multi-tool_tw ./run_enrichment.sh
+  frontend:
+    imports:
+      - kind: geneMeta
+        name: geneScores
+        label: >
+          "Genes and scores from differential expression analysis and including
+          the title, e.g., \"cluster_0 vs. all other: Z\""
+    args:
+      - type: select
+        name: enrichmentMethod
+        label: Enrichment method
+        default: KEGG
+        choices:
+          - name: KEGG
+            description: KEGG pathway enrichment analysis
+          - name: GO
+            description: GO term enrichment analysis
+      - type: number
+        name: seed
+        label: Random seed
+        default: 96813
+    results:
+      - type: png
+        label: Enrichment plot
+        width: 750
+        height: 400
+        extractFrom: enrichmentPlot
+        description: Plot of top enriched pathways/terms
+      - type: table
+        label: Table of enriched pathways/terms
+        description: Identifiers and scores for enriched pathways/terms
+        cols:
+          - name: Identifier
+            description: KEGG pathway or GO term
+          - name: Score
+            description: Absolute normalized enrichment score

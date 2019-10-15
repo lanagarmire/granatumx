@@ -1,0 +1,26 @@
+id: "471a41c9-fb47-45cf-bbcb-982bb7248855"
+meta:
+  title: "Preprocessing steps"
+  subtitle: "A pipeline that preprocesses the scRNA-seq data for downstream analyses"
+  maintainer:
+    name: "Xun Zhu"
+    email: "zhuxun@gmail.com"
+steps:
+  -
+    gbox: "UploadFiles"
+    initialState:
+  -
+    gbox: "Imputation"
+    initialState: null
+  -
+    gbox: "DimReduction"
+    initialState: null
+  -
+    gbox: "InteractiveOutlierRemoval"
+    initialState: null
+  -
+    gbox: "Normalization"
+    initialState: null
+  -
+    gbox: "GeneFiltering"
+    initialState: null

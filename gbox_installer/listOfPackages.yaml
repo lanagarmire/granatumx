@@ -1,0 +1,8 @@
+- ../g_packages/official_py_docker
+- ../g_packages/official_r_docker
+- ../g_packages/deepImpute
+- ../g_packages/deepImpute2
+- ../g_packages/lncrna
+- ../gboxTemplate
+# - ../g_packages/granatum2_multi-tool_tw
+# - ../g_packages/scImpute-gbox

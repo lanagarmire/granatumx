@@ -1,0 +1,50 @@
+id: MNNBatchEffectRemoval
+meta:
+  title: MNN batch effect removal
+  subtitle: Batch effect correction by matching mutual nearest neighbors
+  description: >
+    A strategy for batch correction based on the detection of mutual nearest neighbors (MNNs) in the high-dimensional
+    expression space. This approach does not rely on predefined or equal population compositions across batches;
+    instead, it requires only that a subset of the population be shared between batches. MNN batch-effect-correction
+    method can also be scaled to large numbers of cells. ([ref](https://www.nature.com/articles/nbt.4091))
+endpoints:
+  backend:
+    type: docker
+    image: granatum/py
+    cmd: python ./run_mnnpy.py
+frontend:
+  args:
+    - type: number
+      label: k
+      default: 20
+      injectInto: k
+      description: Number of mutual nearest neighbors
+    - type: number
+      label: sigma
+      default: 1
+      injectInto: sigma
+      description: The bandwidth of the Gaussian smoothing kernel used to compute the correction vectors
+    - type: checkbox
+      label: Log transform in the boxplots
+      default: false
+      injectInto: log_trans_when_plot
+      description: Use log(x + 1) in the boxplots. Recommended for non-log transformed assays to have visualization clarity.
+    - max: 1000
+      min: 1
+      type: number
+      label: Number of cells to plot in the bar-plot
+      default: 40
+      injectInto: num_cells_to_sample
+      description: >-
+        Plotting too many cells in the same bar-plot will render the plot
+        intelligible.
+  exports:
+    - kind: assay
+      extractFrom: Batch corrected assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay
+    - kind: sampleMeta
+      label: Batch factor
+      injectInto: batch_dict

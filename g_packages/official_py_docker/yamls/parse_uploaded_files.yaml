@@ -1,0 +1,67 @@
+id: UploadFiles
+meta:
+  title: Upload Files
+  subtitle: Upload any files and provide them as exports.
+  description: |
+    Upload any files and provide them as exports. You can try the [example assay
+    file](/example_assay.csv) and the [example metadata
+    file](/example_metadata.csv).
+
+    The example data is reported by Kim, Kyu-Tae, et al. "*Application of
+    single-cell RNA sequencing in optimizing a combinatorial therapeutic
+    strategy in metastatic renal cell carcinoma.*" Genome biology 17.1 (2016):
+    80.
+endpoints:
+  backend:
+    cmd: python ./parse_uploaded_files.py
+    type: docker
+    image: granatum/py
+frontend:
+  uploadedFiles:
+    - label: Assay to upload
+      injectInto: assayFile
+    - label: Sample metadata file to upload
+      optional: true
+      injectInto: sampleMetaFile
+  args:
+    - type: select
+      label: File format
+      choices:
+        - label: Comma separated values (CSV) (*.csv)
+          value: csv
+        - label: Tab separated values (TSV) (*.txt)
+          value: tsv
+        - label: Excel file (*.xls/xlsx)
+          value: excel
+      default: csv
+      injectInto: fileFormat
+    - type: checkbox
+      label: Convert gene IDs
+      default: false
+      injectInto: whether_convert_id
+    - type: select
+      label: Species
+      choices:
+        - label: Human
+          value: human
+        - label: Mouse
+          value: mouse
+      default: human
+      injectInto: species
+    - type: select
+      label: Convert gene IDs into (HGNC symbol is recommended)
+      choices:
+        - label: HGNC symbol (e.g. AGK)
+          value: symbol
+        - label: Ensembl Gene ID (e.g. ENSG00000006530)
+          value: ensembl
+        - label: Ensembl Transcript ID (e.g. ENST00000473247)
+          value: ensembl_trans
+        - label: NCBI Entrez gene ID (e.g. 55750)
+          value: entrez
+      default: symbol
+      injectInto: to_id_type
+    - type: checkbox
+      label: Add extra info (from BioMart) into gene metadata
+      default: true
+      injectInto: add_info

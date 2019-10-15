@@ -1,0 +1,54 @@
+id: CombineAssays
+meta:
+  title: Combine Assays
+  subtitle: Combine two assays into one
+  description: |
+    Combine two assays into one. The combined assay is going to have
+    cells from both input assays. A `sampleMeta` annotation is generated
+    to distinguish them.
+endpoints:
+  backend:
+    cmd: python ./combine_assays.py
+    type: docker
+    image: granatum/py
+frontend:
+  args:
+    - type: text
+      label: Label for Assay 1
+      injectInto: label1
+      default: 'Assay1'
+    - type: text
+      label: Label for Assay 2
+      injectInto: label2
+      default: 'Assay2'
+    - type: select
+      label: Combining direction (de-duplication by prepending the label)
+      injectInto: direction
+      default: samples
+      choices:
+        - label: Combine samples (duplicated sample ids are de-duplicated)
+          value: samples
+        - label: Combine genes (duplicated gene ids are de-duplicated)
+          value: genes
+    - type: select
+      label: Normalization
+      injectInto: normalization
+      default: none
+      choices:
+        - label: None
+          value: none
+        - label: Normalize by the Frobenius norm of the matrices
+          value: frobenius
+        - label: Normalize by the mean of the matrices
+          value: mean
+  imports:
+    - kind: assay
+      label: Assay 1
+      injectInto: assay1
+    - kind: assay
+      label: Assay 2
+      injectInto: assay2
+  exports:
+    - kind: assay
+      extractFrom: Combined assay
+      meta: {}

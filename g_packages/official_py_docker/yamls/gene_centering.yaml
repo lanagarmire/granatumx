@@ -1,0 +1,22 @@
+id: GeneCentering
+meta:
+  title: Gene Centering
+  subtitle: >-
+    Subtract the expression of each gene by its average across all cells
+  description: >
+    Subtract the expression of each gene by its average across all cells. After
+    this operation, each gene is going to have an average expression of zero
+    across all samples.
+endpoints:
+  backend:
+    type: docker
+    image: granatum/py
+    cmd: python ./gene_centering.py
+frontend:
+  exports:
+    - kind: assay
+      extractFrom: Gene centered assay
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay

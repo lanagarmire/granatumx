@@ -1,0 +1,34 @@
+id: ScanpyMarkerGenes
+meta:
+  title: Marker Genes Identification
+  subtitle: Find important genes in each group using t-test. (Backed by Scanpy)
+  citations:
+    - bibtex: |
+        @article{wolf2018scanpy,
+          title={SCANPY: Large-scale single-cell gene expression data analysis},
+          author={Wolf, F Alexander and Angerer, Philipp and Theis, Fabian J},
+          journal={Genome biology},
+          volume={19},
+          number={1},
+          pages={15},
+          year={2018},
+          publisher={BioMed Central}
+        }
+  description: |
+    Find important genes in each group using t-test.
+endpoints:
+  backend:
+    cmd: python ./scanpy_marker_genes.py
+    type: docker
+    image: granatum/py
+frontend:
+  imports:
+    - kind: assay
+      label: Assay including matrix and geneIds
+      injectInto: assay
+    - kind: sampleMeta
+      label: Group vector
+      injectInto: groupVec
+      description: >-
+        Group vector (e.g, [1,1,1,2,2,2,...]) indicating the sample groups in
+        the matrix

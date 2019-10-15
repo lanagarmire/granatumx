@@ -1,0 +1,39 @@
+id: JammitAnalyze
+meta:
+  title: JAMMIT Analysis
+  subtitle: Joint Analysis of Many Matrices by Iteration
+  description: >
+    JAMMIT jointly analyzes an arbitrary number of input data matrices
+    and produces low-dimensional signatures for each matrix composed of a
+    small number of variables (i.e., matrix rows) that in aggregate exactly
+    represents a dominant signal in the row-space of the matrix stack as a
+    sparse linear model. A number of different solutions are generated
+    on a user-defined grid of "sparsity" parameters. Specific solutions are
+    selected by the user based on false discovery rate (FDR) and signature
+    size.
+endpoints:
+  backend:
+    cmd: python ./run_jammit_analyze.py
+    type: docker
+    image: granatum/py
+frontend:
+  imports:
+    - kind: assay
+      label: Assay
+      injectInto: assay
+  args:
+    - type: number
+      injectInto: alpha
+      label: Alpha
+      description: >-
+        The alpha for the JAMMIT algorithm
+      default: 1
+    - type: seed
+      injectInto: random_seed
+      label: Random seed
+      description: >-
+        Random seed
+      default: 56143
+  # exports:
+  #   - kind: sampleCoords
+  #     extractFrom: t-SNE coordinates
