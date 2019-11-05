@@ -22,6 +22,12 @@ features of GranatumX:
 * Save and manage multiple projects from one secure personal account
 * New clean and intuitive interface with much more functionality
 
+## System requirements
+
+* Linux (Ubuntu 14.04 is tested)
+* Docker (19.03.4-ce is tested)
+* Yarn (1.19.1 is tested)
+
 ## Architecture
 
 <!-- Web interface: -->
@@ -39,7 +45,7 @@ The entire architecture has been re-designed from the ground up
   * React (component rendering)
   * Material-UI (theme)
 
-<!-- 
+<!--
       - PostgreSQL (database)
 -->
 
@@ -72,5 +78,3 @@ If starting the server with sudo you may need to add the -E flag to use your cur
 * DATABASE_URL: Url to connect to your Postgresql database server
 * SSL_CERT: (optional) To serve Granatum on port 443 over SSL, set to certificate filepath
 * SSL_KEY: (optional) To serve Granatum on port 443 over SSL, set to private key filepath
-
-
