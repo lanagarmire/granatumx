@@ -3,7 +3,7 @@ numpy==1.14.1
 pandas==0.22.0
 scikit-learn==0.19.1
 scipy==1.0.0
-tensorflow==1.7.0
+tensorflow==2.3.1
 configparser==3.5.0
 matplotlib==2.1.2
 sklearn==0.0
