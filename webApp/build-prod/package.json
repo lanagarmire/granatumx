@@ -139,7 +139,7 @@
     "stylelint-order": "^0.6.0",
     "svg-url-loader": "^2.1.1",
     "theming": "^1.2.1",
-    "three": "^0.93.0",
+    "three": "^0.137.0",
     "three-canvas-renderer": "^2.0.0",
     "three-orbitcontrols-ts": "^0.1.2",
     "ts-loader": "3.5.0",
